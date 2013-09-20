@@ -9,6 +9,7 @@ from ella.articles.models import Article
 from ella.utils.test_helpers import create_basic_categories, create_and_place_a_publishable, default_time
 from ella.utils import timezone
 
+
 def create_and_place_more_publishables(case):
     """
     Create an article in every category
@@ -27,6 +28,7 @@ def create_and_place_more_publishables(case):
             )
         case.publishables.append(p)
 
+
 def list_all_publishables_in_category_by_hour(case, category=None):
     case.listings = []
 
@@ -42,4 +44,3 @@ def list_all_publishables_in_category_by_hour(case, category=None):
         )
         publish_from += timedelta(seconds=3600)
     case.listings.reverse()
-

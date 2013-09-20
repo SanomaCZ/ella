@@ -22,6 +22,7 @@ from ella.utils.timezone import utc_localize
 
 default_time = utc_localize(datetime(2008, 1, 10))
 
+
 def create_category(title, tree_parent=None, **kwargs):
     defaults = {
         'site_id': getattr(settings, "SITE_ID", 1),
@@ -32,6 +33,7 @@ def create_category(title, tree_parent=None, **kwargs):
         tree_parent = Category.objects.get_by_tree_path(tree_parent)
     cat, created = Category.objects.get_or_create(tree_parent=tree_parent, title=title, defaults=defaults)
     return cat
+
 
 def create_basic_categories(case):
     case.site_id = getattr(settings, "SITE_ID", 1)
@@ -55,6 +57,7 @@ def create_basic_categories(case):
     )
     case.addCleanup(Category.objects.clear_cache)
 
+
 def create_and_place_a_publishable(case, **kwargs):
     defaults = dict(
         title='First Article',
@@ -69,27 +72,27 @@ def create_and_place_a_publishable(case, **kwargs):
     case.publishable = Article.objects.create(**defaults)
     case.only_publishable = Publishable.objects.get(pk=case.publishable.pk)
 
+
 def create_photo(case, color="black", size=(200, 100), **kwargs):
     # prepare image in temporary directory
     file = BytesIO()
     case.image = Image.new('RGB', size, color)
     case.image.save(file, format="jpeg")
 
-
     f = InMemoryUploadedFile(
-            file = file,
-            field_name = 'image',
-            name = 'example-photo.jpg',
-            content_type = 'image/jpeg',
-            size = len(file.getvalue()),
-            charset = None
+            file=file,
+            field_name='image',
+            name='example-photo.jpg',
+            content_type='image/jpeg',
+            size=len(file.getvalue()),
+            charset=None
         )
 
     data = dict(
-        title = "Example 中文 photo",
-        slug = "example-photo",
-        height = size[0],
-        width = size[1],
+        title="Example 中文 photo",
+        slug="example-photo",
+        height=size[0],
+        width=size[1],
     )
     data.update(kwargs)
 
