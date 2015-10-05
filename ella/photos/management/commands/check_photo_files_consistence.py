@@ -54,11 +54,11 @@ class Command(BaseCommand):
         if level <= self.verbosity:
             if fd:
                 try:
-                    print >> fd, message
+                    print fd.write('%s\n' % message)
                 except IOError:
                     pass
             else:
-                print message
+                print(message)
 
     def print_error(self, message):
         self.print_message(message, self.VERBOSITY_ERROR, sys.stderr)
