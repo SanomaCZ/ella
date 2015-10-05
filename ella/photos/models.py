@@ -1,9 +1,12 @@
 import logging
 from PIL import Image
 from os import path
-from cStringIO import StringIO
 import os.path
-import string
+
+try:
+    from io import BytesIO
+except ImportError:
+    from cStringIO import StringIO as BytesIO
 
 from django.db import models
 from django.db.models import signals
@@ -390,7 +393,7 @@ class FormatedPhoto(models.Model):
 
         self.width, self.height = stretched_photo.size
 
-        f = StringIO()
+        f = BytesIO()
         imgf = (self.photo._get_image().format or
                 Image.EXTENSION[path.splitext(self.photo.image.name)[1]])
 

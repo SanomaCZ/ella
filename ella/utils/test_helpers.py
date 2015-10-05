@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from PIL import Image
-from cStringIO import StringIO
+
+try:
+    from io import BytesIO
+except ImportError:
+    from cStringIO import StringIO as BytesIO
 
 from django.utils import six
 from django.conf import settings
@@ -65,7 +69,7 @@ def create_and_place_a_publishable(case, **kwargs):
 
 def create_photo(case, color="black", size=(200, 100), **kwargs):
     # prepare image in temporary directory
-    file = StringIO()
+    file = BytesIO()
     case.image = Image.new('RGB', size, color)
     case.image.save(file, format="jpeg")
 
