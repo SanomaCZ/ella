@@ -1,3 +1,4 @@
+from django.utils import six
 from django.dispatch import Signal
 from django.utils.itercompat import is_iterable
 from django.conf import settings
@@ -22,7 +23,7 @@ def register(app_name, modules):
     global INSTALLED_APPS_REGISTER
     mod_list = INSTALLED_APPS_REGISTER.get(app_name, [])
 
-    if isinstance(modules, basestring):
+    if isinstance(modules, six.string_types):
         mod_list.append(modules)
     elif is_iterable(modules):
         mod_list.extend(modules)

@@ -1,5 +1,6 @@
 import logging
 
+from django.utils import six
 from django import template
 from django.db import models
 from django.utils.encoding import smart_str
@@ -30,7 +31,7 @@ class ListingNode(template.Node):
                 value = value.resolve(context)
             params[key] = value
 
-        if 'category' in params and isinstance(params['category'], basestring):
+        if 'category' in params and isinstance(params['category'], six.string_types):
             params['category'] = Category.objects.get_by_tree_path(params['category'])
 
         limits = {}

@@ -3,6 +3,7 @@ from datetime import datetime
 from PIL import Image
 from cStringIO import StringIO
 
+from django.utils import six
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.template.defaultfilters import slugify
@@ -21,7 +22,7 @@ def create_category(title, tree_parent=None, **kwargs):
         'slug': slugify(title),
     }
     defaults.update(kwargs)
-    if isinstance(tree_parent, basestring):
+    if isinstance(tree_parent, six.string_types):
         tree_parent = Category.objects.get_by_tree_path(tree_parent)
     cat, created = Category.objects.get_or_create(tree_parent=tree_parent, title=title, defaults=defaults)
     return cat

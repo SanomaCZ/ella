@@ -5,6 +5,7 @@ from test_ella.cases import RedisTestCase as TestCase
 
 from nose import tools
 
+from django.utils import six
 from django.http import Http404, HttpResponse
 from django.core.urlresolvers import NoReverseMatch
 from django.template import Template, Context
@@ -33,7 +34,7 @@ def custom_view(request, context):
 
 def dummy_view(request, *args, **kwargs):
     def str_normalization(item):
-        if isinstance(item, basestring):
+        if isinstance(item, six.string_types):
             return str(item)
         return item
     ar = tuple(str_normalization(a) for a in args)

@@ -1,3 +1,4 @@
+from django.utils import six
 from django import template
 from django.template import TemplateSyntaxError
 
@@ -13,7 +14,7 @@ def _get_category_from_pars_var(template_var, context):
     get category from template variable or from tree_path
     '''
     cat = template_var.resolve(context)
-    if isinstance(cat, basestring):
+    if isinstance(cat, six.string_types):
         cat = Category.objects.get_by_tree_path(cat)
     return cat
 

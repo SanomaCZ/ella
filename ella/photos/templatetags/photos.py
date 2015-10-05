@@ -1,5 +1,6 @@
 import logging
 
+from django.utils import six
 from django import template
 from django.conf import settings
 
@@ -19,7 +20,7 @@ class ImageTag(template.Node):
         if isinstance(self.format, template.Variable):
             try:
                 format = self.format.resolve(context)
-                if isinstance(format, basestring):
+                if isinstance(format, six.string_types):
                     format = Format.objects.get_for_name(format)
             except (template.VariableDoesNotExist, Format.DoesNotExist):
                 context[self.var_name] = None
@@ -84,7 +85,7 @@ class ImgTag(template.Node):
         self.photo, self.format, self.var_name = photo, format, var_name
 
     def render(self, context):
-        if isinstance(self.photo, basestring):
+        if isinstance(self.photo, six.string_types):
             try:
                 # try retrieving just the ID first to avoid DB lookup
                 photo = template.Variable(self.photo + '_id').resolve(context)
