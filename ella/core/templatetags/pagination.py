@@ -1,5 +1,6 @@
 from urllib import urlencode
 
+from django.utils import six
 from django import template
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
@@ -22,7 +23,7 @@ def _do_paginator(context, adjacent_pages, template_name):
     query_params = '?p='
     if 'request' in context:
         get = context['request'].GET
-        query_params = '?%s&p=' % urlencode(dict((k, smart_str(v)) for (k, v) in get.iteritems() if k != 'p'))
+        query_params = '?%s&p=' % urlencode(dict((k, smart_str(v)) for (k, v) in six.iteritems(get) if k != 'p'))
 
     page = context['page']
     page_no = int(page.number)

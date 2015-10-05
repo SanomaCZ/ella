@@ -6,8 +6,10 @@ from ella.core.models import Category, Publishable, Listing, Author, Source
 from ella.photos.models import FormatedPhoto, Photo
 from ella.core.conf import core_settings
 
+from django.utils import six
 from django.core.paginator import Page, Paginator
 from django.http import Http404
+
 from ella.utils.timezone import to_timestamp
 
 
@@ -16,7 +18,7 @@ def serialize_list(request, l):
 
 
 def serialize_dict(request, d):
-    return dict((k, object_serializer.serialize(request, v)) for k, v in d.iteritems())
+    return dict((k, object_serializer.serialize(request, v)) for k, v in six.iteritems(d))
 
 
 def serialize_page(request, page):
