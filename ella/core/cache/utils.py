@@ -39,6 +39,8 @@ def invalidate_cache_for_object(obj):
 def normalize_key(key):
     if len(key) < 250:
         return key
+    if six.PY3:
+        key = key.encode("utf-8", "replace")
     return md5(key).hexdigest()
 
 
