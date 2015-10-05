@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from hashlib import md5
 from itertools import chain
 
+from django.utils import six
 from django.conf import settings
 
 from ella.core.cache.utils import get_cached_objects, SKIP
@@ -265,7 +266,10 @@ class RedisListingHandler(ListingHandler):
 
     def _union(self, union_keys, pipe):
         if len(union_keys) > 1:
-            result_key = '%s:zus:%s' % (self.PREFIX, md5(','.join(union_keys)).hexdigest())
+            to_hash = ','.join(union_keys)
+            if six.PY3:
+                to_hash = to_hash.encode("utf-8", "replace")
+            result_key = '%s:zus:%s' % (self.PREFIX, md5(to_hash).hexdigest())
             pipe.zunionstore(result_key, union_keys, 'MAX')
             pipe.expire(result_key, 60)
             return result_key
@@ -301,7 +305,10 @@ class RedisListingHandler(ListingHandler):
 
             # do the intersect if required and output a single key
             if ct_key:
-                inter_key = '%s:zis:%s' % (self.PREFIX, md5(','.join((ct_key, key))).hexdigest())
+                to_hash = ','.join((ct_key, key))
+                if six.PY3:
+                    to_hash = to_hash.encode("utf-8", "replace")
+                inter_key = '%s:zis:%s' % (self.PREFIX, md5(to_hash).hexdigest())
                 pipe.zinterstore(inter_key, (ct_key, key), 'MAX')
                 pipe.expire(inter_key, 60)
                 key = inter_key

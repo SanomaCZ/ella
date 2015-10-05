@@ -1,9 +1,11 @@
 import time
+from hashlib import md5
 from datetime import date, datetime, timedelta
 
+from django.utils import six
 from django.core.cache import get_cache
 from ella.core.cache.utils import normalize_key
-from hashlib import md5
+
 from test_ella.cases import RedisTestCase as TestCase
 from django.test.client import RequestFactory
 from django.contrib.sites.models import Site
@@ -498,6 +500,6 @@ def test_normalize_key_doesnt_touch_short_key():
 
 def test_normalize_key_md5s_long_key():
     key = "0123456789" * 30
-    tools.assert_equals(md5(key).hexdigest(),normalize_key(key))
+    tools.assert_equals(md5(key.encode("utf-8", "replace") if six.PY3 else key).hexdigest(),normalize_key(key))
 
 
