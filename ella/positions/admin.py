@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.utils.translation import ugettext, ugettext_lazy as _
 
@@ -10,7 +12,7 @@ class PositionOptions(admin.ModelAdmin):
         if not obj.target:
             return '-- %s --' % ugettext('empty position')
         else:
-            return u'%s [%s]' % (
+            return '%s [%s]' % (
                 getattr(obj.target, 'title', obj.target),
                 ugettext(obj.target_ct.name),
             )

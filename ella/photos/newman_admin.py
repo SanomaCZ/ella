@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.conf.urls.defaults import patterns, url
 from django.contrib.admin import helpers
 from django.contrib.admin.util import flatten_fieldsets
@@ -75,7 +77,7 @@ class PhotoSizeFilter(CustomFilterSpec):
         keys = self.get_lookup_kwarg()
         for key in keys:
             if key in lookup_kwargs:
-                return u'>%spx' % lookup_kwargs[key]
+                return '>%spx' % lookup_kwargs[key]
 
 
 class FormatAdmin(newman.NewmanModelAdmin):
@@ -212,7 +214,7 @@ class PhotoAdmin(newman.NewmanModelAdmin):
                 context.update({'object': new_object})
             else:
                 for e in form.errors:
-                    error_dict[u"id_%s" % e] = [u"%s" % ee for ee in
+                    error_dict["id_%s" % e] = ["%s" % ee for ee in
                                                 form.errors[e]]
                 context.update({'error_dict': error_dict})
         else:

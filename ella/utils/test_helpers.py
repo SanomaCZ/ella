@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from datetime import datetime
 from PIL import Image
 
@@ -34,30 +36,30 @@ def create_category(title, tree_parent=None, **kwargs):
 def create_basic_categories(case):
     case.site_id = getattr(settings, "SITE_ID", 1)
 
-    case.category = create_category(u"你好 category",
-        description=u"exmple testing category",
-        slug=u"ni-hao-category",
+    case.category = create_category("你好 category",
+        description="exmple testing category",
+        slug="ni-hao-category",
     )
 
     case.category_nested = create_category(
-        u"nested category",
+        "nested category",
         tree_parent=case.category,
-        description=u"category nested in case.category",
+        description="category nested in case.category",
     )
 
     case.category_nested_second = create_category(
-        u" second nested category",
+        " second nested category",
         tree_parent='nested-category',
-        description=u"category nested in case.category_nested",
-        slug=u"second-nested-category",
+        description="category nested in case.category_nested",
+        slug="second-nested-category",
     )
     case.addCleanup(Category.objects.clear_cache)
 
 def create_and_place_a_publishable(case, **kwargs):
     defaults = dict(
-        title=u'First Article',
-        slug=u'first-article',
-        description=u'Some\nlonger\ntext',
+        title='First Article',
+        slug='first-article',
+        description='Some\nlonger\ntext',
         category=case.category_nested,
         publish_from=default_time,
         published=True,
@@ -84,8 +86,8 @@ def create_photo(case, color="black", size=(200, 100), **kwargs):
         )
 
     data = dict(
-        title = u"Example 中文 photo",
-        slug = u"example-photo",
+        title = "Example 中文 photo",
+        slug = "example-photo",
         height = size[0],
         width = size[1],
     )

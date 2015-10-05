@@ -5,6 +5,7 @@ from nose import tools, SkipTest
 
 from django.core.urlresolvers import reverse
 from django.template import Context
+from django.utils.encoding import force_text
 
 from ella.core.models import Listing
 from ella.core.feeds import RSSTopCategoryListings
@@ -124,7 +125,7 @@ class TestFeeds(TestCase):
         tools.assert_true(self.publishables[0].photo is not None)
         original = self.publishables[0].photo.image
         new = self._feeder.item_enclosure_url(self.listings[0])
-        tools.assert_not_equals(unicode(original), unicode(new))
+        tools.assert_not_equals(force_text(original), force_text(new))
 
     def test_get_enclosure_returns_none_when_no_image_set(self):
         tools.assert_equals(self._feeder.item_enclosure_url(self.listings[0]), None)

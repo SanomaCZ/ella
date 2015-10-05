@@ -483,7 +483,7 @@ shouldn't be cropped.
 Methods
 -------
 
-.. method:: Photo.__unicode__()
+.. method:: Photo.__str__()
 
     A human-readable representation of the ``Photo``.
 
@@ -736,7 +736,7 @@ Attributes
 Methods
 -------
 
-.. method:: Position.__unicode__(self)
+.. method:: Position.__str__(self)
 
     Human-readable representation of the position.
 

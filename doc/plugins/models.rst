@@ -24,11 +24,15 @@ acustomed to Django models, this is going to look very familiar to you.::
    
     # in models.py within your video application
     
+    from __future__ import unicode_literals
     from django.db import models
     from django.utils.translation import ugettext_lazy as _
+    from django.utils.encoding import force_text, python_2_unicode_compatible
     
     from ella.core.models import Publishable
     
+    
+    @python_2_unicode_compatible
     class YoutubeVideo(Publishable):
         code = models.CharField(max_length=20, title=_('Code'))
         
@@ -36,7 +40,7 @@ acustomed to Django models, this is going to look very familiar to you.::
             verbose_name = _('Youtube video')
             verbose_name_plural = _('Youtube videos')
         
-        def __unicode__(self):
+        def __str__(self):
             return self.code      
             
 .. note::

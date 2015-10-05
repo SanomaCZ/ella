@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 from django.utils.translation import ugettext_lazy as _
@@ -5,6 +7,7 @@ from django.db import models
 from django.db.models import Q
 from django.template import Template, TemplateSyntaxError
 from django.core.exceptions import ValidationError
+from django.utils.encoding import python_2_unicode_compatible
 
 from ella.core.box import Box
 from ella.core.cache import cache_this, CachedGenericForeignKey, \
@@ -60,6 +63,7 @@ def PositionBox(position, *args, **kwargs):
     return getattr(position.target, 'box_class', Box)(obj, *args, **kwargs)
 
 
+@python_2_unicode_compatible
 class Position(models.Model):
     """
     Represents a position -- a placeholder -- on a page belonging to a certain
@@ -113,8 +117,8 @@ class Position(models.Model):
         if qset.count():
             raise ValidationError(_('There already is a postion for %(cat)s named %(name)s fo this time.') % {'cat': self.category, 'name': self.name})
 
-    def __unicode__(self):
-        return u'%s:%s' % (self.category, self.name)
+    def __str__(self):
+        return '%s:%s' % (self.category, self.name)
 
     def render(self, context, nodelist, box_type):
         " Render the position. "

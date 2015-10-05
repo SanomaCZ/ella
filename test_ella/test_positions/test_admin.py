@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from unittest import TestCase
 
 from nose import tools
@@ -23,13 +25,13 @@ class TestPositionAdmin(TestCase):
     def test_result_of_show_title_for_obj_with_title_attr(self):
         p = Position()
         p.target = self.publishable
-        tools.assert_equals(u'First Article [Article]', self.position_admin.show_title(p))
+        tools.assert_equals('First Article [Article]', self.position_admin.show_title(p))
 
     def test_result_of_show_title_for_obj_without_title_attr(self):
         source = Source.objects.create(name='Hi!')
         p = Position()
         p.target = source
-        tools.assert_equals(u'Hi! [Source]', self.position_admin.show_title(p))
+        tools.assert_equals('Hi! [Source]', self.position_admin.show_title(p))
 
     def test_result_of_show_title_for_position_without_trget(self):
         p = Position()

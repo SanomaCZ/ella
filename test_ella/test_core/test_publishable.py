@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from datetime import timedelta, datetime
 import pytz
 
@@ -116,17 +118,17 @@ class TestUrl(PublishableTestCase):
         )
 
         category = Category.objects.create(
-            title=u"再见 category",
-            description=u"example testing category, second site",
+            title="再见 category",
+            description="example testing category, second site",
             site=site,
-            slug=u'zai-jian-category',
+            slug='zai-jian-category',
         )
 
         self.publishable.category = category
         self.publishable.publish_from = default_time
         self.publishable.save()
 
-        tools.assert_equals(u'http://not-example.com/2008/1/10/first-article/', self.publishable.get_absolute_url())
+        tools.assert_equals('http://not-example.com/2008/1/10/first-article/', self.publishable.get_absolute_url())
 
     def test_unique_url_validation(self):
         self.publishable.pk = None

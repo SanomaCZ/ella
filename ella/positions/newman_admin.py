@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import datetime
 
 from django import template
@@ -8,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from django.shortcuts import render_to_response
 from django.contrib.admin import helpers
 from django.contrib.contenttypes.models import ContentType
+from django.utils.encoding import force_text
 
 import ella_newman as newman
 
@@ -38,13 +41,13 @@ class PositionAdmin(newman.NewmanModelAdmin):
     list_filter = ('category', 'disabled', 'active_from', 'active_till',)
     search_fields = ('name', 'box_type', 'text', 'category__title',)
 
-    suggest_fields = {'category': ('__unicode__', 'title', 'slug', 'tree_path',),}
+    suggest_fields = {'category': ('__str__', 'title', 'slug', 'tree_path',),}
 
     def show_title(self, obj):
         if not obj.target:
             return '-- %s --' % ugettext('empty position')
         else:
-            return u'%s [%s]' % (obj.target.title, ugettext(obj.target_ct.name),)
+            return '%s [%s]' % (obj.target.title, ugettext(obj.target_ct.name),)
     show_title.short_description = _('Title')
 
     def is_filled(self, obj):
@@ -106,7 +109,7 @@ class PositionAdmin(newman.NewmanModelAdmin):
                     change_message = self.construct_change_message(request, form, None)
                     self.log_change(request, new_object, change_message)
 
-                msg = unicode(_('Positions were changed successfully.'))
+                msg = force_text(_('Positions were changed successfully.'))
 
                 return JsonResponse(msg, data={'category_id': category_id})
         else:

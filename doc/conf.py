@@ -10,7 +10,7 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-
+from __future__ import unicode_literals
 
 from django.conf import settings
 
@@ -53,8 +53,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Ella CMS'
-copyright = u'2012, Ella team'
+project = 'Ella CMS'
+copyright = '2012, Ella team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -191,8 +191,8 @@ htmlhelp_basename = 'EllaCMSdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('a', 'EllaCMS.tex', u'Ella CMS Documentation',
-   u'Ella team', 'manual'),
+  ('a', 'EllaCMS.tex', 'Ella CMS Documentation',
+   'Ella team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -224,6 +224,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('a', 'ellacms', u'Ella CMS Documentation',
-     [u'Ella team'], 1)
+    ('a', 'ellacms', 'Ella CMS Documentation',
+     ['Ella team'], 1)
 ]

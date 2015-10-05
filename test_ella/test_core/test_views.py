@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from datetime import datetime
 from test_ella.cases import RedisTestCase as TestCase
@@ -311,18 +312,18 @@ class TestObjectDetail(ViewsTestCase):
 class TestGetTemplates(ViewsTestCase):
     def test_homepage_uses_only_path(self):
         tools.assert_equals(
-            [u'page/category/ni-hao-category/category.html', u'page/category.html'],
+            ['page/category/ni-hao-category/category.html', 'page/category.html'],
             get_templates('category.html', category=self.category)
         )
 
     def test_first_nested_uses_only_path(self):
         tools.assert_equals(
-            [u'page/category/nested-category/category.html', u'page/category.html'],
+            ['page/category/nested-category/category.html', 'page/category.html'],
             get_templates('category.html', category=self.category_nested)
         )
 
     def test_more_nested_uses_fallback_to_parents(self):
         tools.assert_equals(
-            [u'page/category/nested-category/second-nested-category/category.html', u'page/category/nested-category/category.html', u'page/category.html'],
+            ['page/category/nested-category/second-nested-category/category.html', 'page/category/nested-category/category.html', 'page/category.html'],
             get_templates('category.html', category=self.category_nested_second)
         )

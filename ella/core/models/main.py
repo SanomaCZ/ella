@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import re
 
 from django.conf import settings
@@ -6,6 +8,7 @@ from django.core.validators import validate_slug, RegexValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from app_data import AppDataField
 
@@ -19,6 +22,7 @@ else:
     from django.contrib.auth.models import User
 
 
+@python_2_unicode_compatible
 class Author(models.Model):
     """
     Describes an Author of the published content. Author can be:
@@ -44,7 +48,7 @@ class Author(models.Model):
         verbose_name = _('Author')
         verbose_name_plural = _('Authors')
 
-    def __unicode__(self):
+    def __str__(self):
         if not self.name:
             return self.slug
         return self.name
@@ -61,6 +65,7 @@ class Author(models.Model):
         return root.app_data.ella.get_listings(children=ListingHandler.ALL, author=self, **kwargs)
 
 
+@python_2_unicode_compatible
 class Source(models.Model):
     """
     A ``Source`` in oposition to ``Author`` is used for publishable content
@@ -75,12 +80,13 @@ class Source(models.Model):
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
-category_slug_validator = RegexValidator(re.compile('^(?:[0-9]+[^0-9-]|[a-z])[a-z0-9-]*$'), _('Please enter a valid slug composed of lowecase letter, numbers and hyphens. First character must be a letter.'), 'invalid')
+category_slug_validator = RegexValidator(re.compile(r'^(?:[0-9]+[^0-9-]|[a-z])[a-z0-9-]*$'), _('Please enter a valid slug composed of lowecase letter, numbers and hyphens. First character must be a letter.'), 'invalid')
 
 
+@python_2_unicode_compatible
 class Category(models.Model):
     """
     ``Category`` is the **basic building block of Ella-based sites**. All the
@@ -123,7 +129,7 @@ class Category(models.Model):
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s/%s' % (self.site.name, self.tree_path)
 
     def save(self, **kwargs):
@@ -199,6 +205,7 @@ class Category(models.Model):
     draw_title.allow_tags = True
 
 
+@python_2_unicode_compatible
 class Dependency(models.Model):
     """
     Captures relations between objects to simplify finding out what other objects
@@ -221,6 +228,5 @@ class Dependency(models.Model):
         verbose_name = _('Dependency')
         verbose_name_plural = _('Dependencies')
 
-    def __unicode__(self):
-        return _(u'%(obj)s depends on %(dep)s') % {'obj': self.dependent, 'dep': self.target}
-
+    def __str__(self):
+        return _('%(obj)s depends on %(dep)s') % {'obj': self.dependent, 'dep': self.target}

@@ -31,7 +31,7 @@ class RelatedInlineAdmin(admin.TabularInline):
 
 class CategoryAdmin(AppDataModelAdmin):
     list_filter = ('site',)
-    list_display = ('draw_title', 'tree_path', '__unicode__')
+    list_display = ('draw_title', 'tree_path', '__str__')
     search_fields = ('title', 'slug',)
     #ordering = ('site', 'tree_path',)
     prepopulated_fields = {'slug': ('title',)}
@@ -73,7 +73,7 @@ class PublishableAdmin(AppDataModelAdmin):
 
 class ListingAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish_from'
-    list_display = ('__unicode__', 'publish_from', 'publish_to',)
+    list_display = ('__str__', 'publish_from', 'publish_to',)
     list_filter = ('category',)
     search_fields = ('publishable__title', 'publishable__slug',
                      'publishable__description',)

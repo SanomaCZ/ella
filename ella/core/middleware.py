@@ -7,6 +7,7 @@ from django import template
 from django.middleware.cache import CacheMiddleware as DjangoCacheMiddleware
 from django.core.cache import cache
 from django.utils.cache import get_cache_key, add_never_cache_headers, learn_cache_key
+from django.utils.encoding import smart_str
 from django.conf import settings
 from ella.core.conf import core_settings
 
@@ -42,8 +43,8 @@ class DoubleRenderMiddleware(object):
             t = template.Template(response.content)
             response.content = t.render(c)
             response['Content-Length'] = len(response.content)
-        except Exception, e:
-            log.warning('Failed to double render on (%s)', unicode(e).encode('utf8'))
+        except Exception as e:
+            log.warning('Failed to double render on (%s)', smart_str(e))
 
         return response
 

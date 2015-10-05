@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from datetime import timedelta
 
 from test_ella.cases import RedisTestCase as TestCase
@@ -29,11 +31,11 @@ class TestListing(TestCase):
 
     def test_get_listing_empty(self):
         c = Category.objects.create(
-            title=u"third nested category",
-            description=u"category nested in case.category_nested_second",
+            title="third nested category",
+            description="category nested in case.category_nested_second",
             tree_parent=self.category_nested_second,
             site_id = self.site_id,
-            slug=u"third-nested-category",
+            slug="third-nested-category",
         )
 
         l = Listing.objects.get_listing(category=c)

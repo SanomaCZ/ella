@@ -7,6 +7,7 @@ from django.utils.translation import ugettext
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
+from django.utils.encoding import force_text
 from django.http import HttpResponse
 
 from ella.photos.models import FormatedPhoto, Format, Photo
@@ -63,7 +64,7 @@ class FormatForm(forms.ModelForm):
         for f in formats:
             for s in f.sites.all():
                 if s in data['sites']:
-                    exists_sites.append(s.__unicode__())
+                    exists_sites.append(force_text(s))
 
         if len(exists_sites):
             raise ValidationError(ugettext("Format with this name exists for site(s): %s" % ", ".join(exists_sites)))

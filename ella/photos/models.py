@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 from PIL import Image
 from os import path
@@ -11,7 +13,7 @@ except ImportError:
 from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import force_unicode, smart_str
+from django.utils.encoding import force_text, smart_str, python_2_unicode_compatible
 from django.contrib.sites.models import Site
 from django.core.files.base import ContentFile
 from django.conf import settings
@@ -52,11 +54,12 @@ def upload_to(instance, filename):
     instance.image.file.seek(0)
 
     return os.path.join(
-        force_unicode(now().strftime(smart_str(photos_settings.UPLOAD_TO))),
+        force_text(now().strftime(smart_str(photos_settings.UPLOAD_TO))),
         name + ext
     )
 
 
+@python_2_unicode_compatible
 class Photo(models.Model):
     """
     Represents original (unformated) photo uploaded by user. Used as source
@@ -91,7 +94,7 @@ class Photo(models.Model):
         verbose_name = _('Photo')
         verbose_name_plural = _('Photos')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
@@ -178,6 +181,7 @@ class FormatManager(models.Manager):
         return format
 
 
+@python_2_unicode_compatible
 class Format(models.Model):
     """
     Defines per-site photo sizes together with rules how to adhere to them.
@@ -213,8 +217,8 @@ class Format(models.Model):
         verbose_name = _('Format')
         verbose_name_plural = _('Formats')
 
-    def __unicode__(self):
-        return  u"%s (%sx%s) " % (self.name, self.max_width, self.max_height)
+    def __str__(self):
+        return  "%s (%sx%s) " % (self.name, self.max_width, self.max_height)
 
     def get_blank_img(self):
         """
@@ -317,6 +321,7 @@ class FormatedPhotoManager(models.Manager):
         return info
 
 
+@python_2_unicode_compatible
 class FormatedPhoto(models.Model):
     """
     Cache-like container of specific photo of specific format. Besides
@@ -342,8 +347,8 @@ class FormatedPhoto(models.Model):
         verbose_name_plural = _('Formated photos')
         unique_together = (('photo', 'format'),)
 
-    def __unicode__(self):
-        return u"%s - %s" % (self.photo, self.format)
+    def __str__(self):
+        return "%s - %s" % (self.photo, self.format)
 
     @property
     def url(self):

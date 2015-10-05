@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _, ugettext
@@ -6,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.redirects.models import Redirect
 from django.core.validators import validate_slug
 from django.core.exceptions import ValidationError
+from django.utils.encoding import python_2_unicode_compatible
 
 from app_data import AppDataField
 
@@ -31,6 +34,7 @@ def PublishableBox(publishable, box_type, nodelist, model=None):
     return box_class(publishable, box_type, nodelist, model=model)
 
 
+@python_2_unicode_compatible
 class Publishable(models.Model):
     """
     Base class for all objects that can be published in Ella.
@@ -81,7 +85,7 @@ class Publishable(models.Model):
         verbose_name = _('Publishable object')
         verbose_name_plural = _('Publishable objects')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def __eq__(self, other):
@@ -228,6 +232,7 @@ def ListingBox(listing, *args, **kwargs):
     return obj.box_class(obj, *args, **kwargs)
 
 
+@python_2_unicode_compatible
 class Listing(models.Model):
     """
     Listing of an ``Publishable`` in a ``Category``. Each and every object that have it's
@@ -255,9 +260,9 @@ class Listing(models.Model):
         verbose_name = _('Listing')
         verbose_name_plural = _('Listings')
 
-    def __unicode__(self):
+    def __str__(self):
         try:
-            return ugettext(u'%(pub)s listed in %(cat)s') % {'pub': self.publishable, 'cat': self.category}
+            return ugettext('%(pub)s listed in %(cat)s') % {'pub': self.publishable, 'cat': self.category}
         except:
             return ugettext('Broken listing')
 
@@ -279,6 +284,7 @@ class Listing(models.Model):
         return self.get_absolute_url(domain=True)
 
 
+@python_2_unicode_compatible
 class Related(models.Model):
     """
     Related objects - model for recording related ``Publishable`` objects.
@@ -299,7 +305,7 @@ class Related(models.Model):
         verbose_name = _('Related')
         verbose_name_plural = _('Related')
 
-    def __unicode__(self):
-        return _(u'%(pub)s relates to %(rel)s') % {'pub': self.publishable, 'rel': self.related}
+    def __str__(self):
+        return _('%(pub)s relates to %(rel)s') % {'pub': self.publishable, 'rel': self.related}
 
 

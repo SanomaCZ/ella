@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 from django.utils import six
@@ -166,7 +168,7 @@ def listing_parse(input):
 
 class EmptyNode(template.Node):
     def render(self, context):
-        return u''
+        return ''
 
 class ObjectNotFoundOrInvalid(Exception): pass
 

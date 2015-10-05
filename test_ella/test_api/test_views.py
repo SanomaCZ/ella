@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import json
 
 from ella.api import object_serializer, FULL
@@ -15,13 +17,13 @@ class TestCategoryDetail(ViewsTestCase):
         tools.assert_equals('application/json', response['Content-Type'])
         tools.assert_equals(
             {
-                "category": {"url": "/", "id": 1, "title": u"\u4f60\u597d category"},
+                "category": {"url": "/", "id": 1, "title": "\u4f60\u597d category"},
                 "listings": {
-                    u'current_page': 1,
-                    u'num_pages': 1,
-                    u'objects': [],
-                    u'per_page': 20,
-                    u'total': 0
+                    'current_page': 1,
+                    'num_pages': 1,
+                    'objects': [],
+                    'per_page': 20,
+                    'total': 0
                 }
             },
             json.loads(response.content)

@@ -9,6 +9,7 @@ from django.utils import six
 from django.http import Http404, HttpResponse
 from django.core.urlresolvers import NoReverseMatch
 from django.template import Template, Context
+from django.utils.encoding import force_text
 
 try:
     from django.conf.urls import patterns, url
@@ -24,13 +25,13 @@ from test_ella import template_loader
 
 # dummy functions to register as views
 def view(request, bits, context):
-    return u"OK"
+    return "OK"
 
 def second_view(request, bits, context):
     return request, bits, context
 
 def custom_view(request, context):
-    return u"OK"
+    return "OK"
 
 def dummy_view(request, *args, **kwargs):
     def str_normalization(item):
@@ -139,7 +140,7 @@ class TestCustomDetailRegistration(UnitTestCase):
 
     def test_call_custom_detail_simple_success(self):
         self.resolver.register_custom_detail(self.__class__, custom_view)
-        tools.assert_equals(u"OK", self.resolver.call_custom_detail(request=object(), context=self.context))
+        tools.assert_equals("OK", self.resolver.call_custom_detail(request=object(), context=self.context))
 
 
 
@@ -149,21 +150,21 @@ class TestCustomObjectDetailCallView(CustomObjectDetailTestCase):
 
         response = custom_urls.resolver.call_custom_view(object(), self.publishable, 'prefix/new/42/', {'context': 1})
         tools.assert_equals(200, response.status_code)
-        tools.assert_equals("dummy_view:({'context': 1}, '42'),{}", response.content)
+        tools.assert_equals("dummy_view:({'context': 1}, '42'),{}", force_text(response.content))
 
     def test_view_with_kwargs_called_correctly(self):
         custom_urls.resolver.register(self.urlpatterns, prefix='prefix')
 
         response = custom_urls.resolver.call_custom_view(object, self.publishable, 'prefix/add/52/', {'context': 1})
         tools.assert_equals(200, response.status_code)
-        tools.assert_equals("dummy_view:({'context': 1},),{'kwarg_from_url': '52'}", response.content)
+        tools.assert_equals("dummy_view:({'context': 1},),{'kwarg_from_url': '52'}", force_text(response.content))
 
     def test_view_with_no_args_called_correctly(self):
         custom_urls.resolver.register(self.urlpatterns, prefix='prefix')
 
         response = custom_urls.resolver.call_custom_view(object, self.publishable, 'prefix/', {'context': 1})
         tools.assert_equals(200, response.status_code)
-        tools.assert_equals("dummy_view:({'context': 1},),{'kwarg_from_patterns': 42}", response.content)
+        tools.assert_equals("dummy_view:({'context': 1},),{'kwarg_from_patterns': 42}", force_text(response.content))
 
     def test_404_raised_for_nonexitant_url(self):
         tools.assert_raises(Http404, custom_urls.resolver.call_custom_view, object(), self.publishable, 'prefix/', {})

@@ -1,9 +1,12 @@
+from __future__ import unicode_literals
+
 from mimetypes import guess_type
 
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from django.http import Http404
 from django.template import TemplateDoesNotExist, RequestContext, NodeList
+from django.utils.encoding import force_text
 
 from ella.core.models import Listing, Category
 from ella.core.conf import core_settings
@@ -28,7 +31,7 @@ class RSSTopCategoryListings(Feed):
     def get_object(self, request, category=''):
         bits = category.split('/')
         try:
-            cat = Category.objects.get_by_tree_path(u'/'.join(bits))
+            cat = Category.objects.get_by_tree_path('/'.join(bits))
         except Category.DoesNotExist:
             raise Http404()
 
@@ -81,7 +84,7 @@ class RSSTopCategoryListings(Feed):
         return desc
 
     def item_author_name(self, item):
-        return ', '.join(map(unicode, item.publishable.authors.all()))
+        return ', '.join(map(force_text, item.publishable.authors.all()))
 
     # Enclosure - Photo
     ###########################################################################

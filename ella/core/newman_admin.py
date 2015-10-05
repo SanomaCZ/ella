@@ -1,6 +1,8 @@
-from django.core.urlresolvers import reverse
+from __future__ import unicode_literals
+
 import time
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.forms import models as modelforms
 from django.forms.util import ValidationError
@@ -31,7 +33,7 @@ class ListingForm(modelforms.ModelForm):
 class ListingInlineAdmin(newman.NewmanTabularInline):
     model = Listing
     extra = 2
-    suggest_fields = {'category': ('__unicode__', 'title', 'slug',)}
+    suggest_fields = {'category': ('__str__', 'title', 'slug',)}
     form = ListingForm
     fieldsets = ((None, {'fields' : ('category','publish_from', 'publish_to', 'commercial',)}),)
     template = 'newman/edit_inline/listing.html'
@@ -42,12 +44,12 @@ class ListingAdmin(newman.NewmanModelAdmin):
     form = ListingForm
 
 class CategoryAdmin(newman.NewmanModelAdmin):
-    list_display = ('__unicode__', 'title', 'tree_path')
+    list_display = ('__str__', 'title', 'tree_path')
     list_filter = ('site',)
     search_fields = ('title', 'slug',)
     prepopulated_fields = {'slug': ('title',)}
     ordering = ('site', 'tree_path',)
-    suggest_fields = {'tree_parent': ('__unicode__', 'title', 'slug')}
+    suggest_fields = {'tree_parent': ('__str__', 'title', 'slug')}
 
 class AuthorAdmin(newman.NewmanModelAdmin):
     list_display = ('name', 'user', 'email',)
@@ -142,7 +144,7 @@ class PublishFromFilter(CustomFilterSpec):
         day = lookup_kwargs[args[0]]
         month = lookup_kwargs[args[1]]
         year = lookup_kwargs[args[2]]
-        return u'%s. %s. %s' % (day, month, year)
+        return '%s. %s. %s' % (day, month, year)
 
 class PublishableAdmin(newman.NewmanModelAdmin):
     """ Default admin options for all publishables """
@@ -157,7 +159,7 @@ class PublishableAdmin(newman.NewmanModelAdmin):
     ordering = ('-publish_from',)
 
     suggest_fields = {
-        'category': ('__unicode__', 'title', 'slug', 'tree_path'),
+        'category': ('__str__', 'title', 'slug', 'tree_path'),
         'authors': ('name', 'slug', 'email',),
         'source': ('name', 'url',),
     }

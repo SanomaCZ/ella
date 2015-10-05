@@ -65,7 +65,7 @@ class CachedGenericForeignKey(GenericForeignKey):
         # Fix for django 1.0 Admin Validation
         if instance is None:
             # TODO: hotfixed
-            #raise AttributeError, u"%s must be accessed via instance" % self.name
+            #raise AttributeError, "%s must be accessed via instance" % self.name
             return
 
         try:
