@@ -93,7 +93,7 @@ class TestObjectDetail(CustomObjectDetailTestCase):
 
         response = self.client.get('/')
         tools.assert_equals(200, response.status_code)
-        tools.assert_equals('OK', response.content)
+        tools.assert_equals('OK', force_text(response.content))
 
     def test_custom_detail_view_called_when_registered(self):
         def my_custom_view(request, context):
@@ -103,7 +103,7 @@ class TestObjectDetail(CustomObjectDetailTestCase):
 
         response = self.client.get(self.url)
         tools.assert_equals(200, response.status_code)
-        tools.assert_equals('OK', response.content)
+        tools.assert_equals('OK', force_text(response.content))
 
     def test_404_returned_when_view_not_registered(self):
         template_loader.templates['404.html'] = ''

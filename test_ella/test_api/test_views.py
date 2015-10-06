@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 import json
 
+from django.utils.encoding import force_text
+
 from ella.api import object_serializer, FULL
 from ella.articles.models import Article
 
@@ -26,7 +28,7 @@ class TestCategoryDetail(ViewsTestCase):
                     'total': 0
                 }
             },
-            json.loads(response.content)
+            json.loads(force_text(response.content))
         )
 
 class TestObjectDetail(ViewsTestCase):
@@ -43,4 +45,4 @@ class TestObjectDetail(ViewsTestCase):
         response = self.client.get('/nested-category/2008/1/10/first-article/', HTTP_ACCEPT='application/json')
         tools.assert_equals(200, response.status_code)
         tools.assert_equals('application/json', response['Content-Type'])
-        tools.assert_equals('Article 1', json.loads(response.content))
+        tools.assert_equals('Article 1', json.loads(force_text(response.content)))

@@ -9,6 +9,7 @@ from nose import tools, SkipTest
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 from django.template import TemplateDoesNotExist
+from django.utils.encoding import force_text
 
 from ella.core.models import Listing
 from ella.utils import timezone
@@ -65,7 +66,7 @@ class TestCategoryDetail(ViewsTestCase):
         template_loader.templates['page/category.html'] = 'page/category.html'
         template_loader.templates['page/category/ni-hao-category/%s' % self.category.template] = 'page/category/ni-hao-category/category.html'
         response = self.client.get('/')
-        tools.assert_equals('page/category/ni-hao-category/category.html', response.content)
+        tools.assert_equals('page/category/ni-hao-category/category.html', force_text(response.content))
 
     def test_signals_fired_for_homepage(self):
         template_loader.templates['page/category.html'] = 'page/category.html'
@@ -85,7 +86,7 @@ class TestCategoryDetail(ViewsTestCase):
         template_loader.templates['page/category.html'] = 'page/category.html'
         template_loader.templates['page/category/%s/%s' % (tp, ctp)] = 'page/category/%s/category.html' % tp
         response = self.client.get('/%s/' % tp)
-        tools.assert_equals('page/category/%s/category.html' % tp, response.content)
+        tools.assert_equals('page/category/%s/category.html' % tp, force_text(response.content))
 
     def test_homepage_context(self):
         template_loader.templates['page/category.html'] = ''
@@ -105,7 +106,7 @@ class TestCategoryDetail(ViewsTestCase):
         template_loader.templates['page/category.html'] = 'category.html'
         template_loader.templates['page/static_page.html'] = 'static_page.html'
         response = self.client.get('/')
-        tools.assert_equals('static_page.html', response.content)
+        tools.assert_equals('static_page.html', force_text(response.content))
 
 
 class TestEmptyHomepage(TestCase):
@@ -115,7 +116,7 @@ class TestEmptyHomepage(TestCase):
         settings.DEBUG = False
         template_loader.templates['404.html'] = '404.html'
         response = self.client.get('/')
-        tools.assert_equals('404.html', response.content)
+        tools.assert_equals('404.html', force_text(response.content))
         settings.DEBUG = orig_debug
 
     def test_welcome_page_is_shown_as_hompage_on_debug(self):
@@ -124,7 +125,7 @@ class TestEmptyHomepage(TestCase):
         settings.DEBUG = True
         template_loader.templates['debug/empty_homepage.html'] = 'empty_homepage.html'
         response = self.client.get('/')
-        tools.assert_equals('empty_homepage.html', response.content)
+        tools.assert_equals('empty_homepage.html', force_text(response.content))
         settings.DEBUG = orig_debug
 
 
@@ -177,24 +178,24 @@ class TestObjectDetailTemplateOverride(ViewsTestCase):
     def test_fallback(self):
         for t in self.templates[-4:]:
             del template_loader.templates[t]
-        tools.assert_equals('0', self.client.get(self.url).content)
+        tools.assert_equals('0', force_text(self.client.get(self.url).content))
 
     def test_ct(self):
         for t in self.templates[-3:]:
             del template_loader.templates[t]
-        tools.assert_equals('1', self.client.get(self.url).content)
+        tools.assert_equals('1', force_text(self.client.get(self.url).content))
 
     def test_category(self):
         for t in self.templates[-2:]:
             del template_loader.templates[t]
-        tools.assert_equals('2', self.client.get(self.url).content)
+        tools.assert_equals('2', force_text(self.client.get(self.url).content))
 
     def test_category_ct(self):
         del template_loader.templates[self.templates[-1]]
-        tools.assert_equals('3', self.client.get(self.url).content)
+        tools.assert_equals('3', force_text(self.client.get(self.url).content))
 
     def test_category_ct_slug(self):
-        tools.assert_equals('4', self.client.get(self.url).content)
+        tools.assert_equals('4', force_text(self.client.get(self.url).content))
 
 class TestObjectDetail(ViewsTestCase):
     def setUp(self):
