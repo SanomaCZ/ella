@@ -25,15 +25,15 @@ class RelatedNode(template.Node):
 
 def parse_related_tag(bits):
     if len(bits) < 6:
-        raise template.TemplateSyntaxError, "{% related N [app_label.Model, ...] for object as var_name %}"
+        raise template.TemplateSyntaxError("{% related N [app_label.Model, ...] for object as var_name %}")
 
     if not bits[1].isdigit():
-        raise template.TemplateSyntaxError, "Count must be an integer."
+        raise template.TemplateSyntaxError("Count must be an integer.")
 
     if bits[-2] != 'as':
-        raise template.TemplateSyntaxError, "Tag must end with as var_name "
+        raise template.TemplateSyntaxError("Tag must end with as var_name ")
     if bits[-4] != 'for':
-        raise template.TemplateSyntaxError, "Tag must end with for object as var_name "
+        raise template.TemplateSyntaxError("Tag must end with for object as var_name ")
 
     if '.' in bits[2] or bits[2] == 'for':
         mod_index = 2
@@ -54,12 +54,12 @@ def parse_related_tag(bits):
                 try:
                     mods.append(get_model(*msm.split('.')))
                 except:
-                    raise template.TemplateSyntaxError, "%r doesn't represent any model." % msm
+                    raise template.TemplateSyntaxError("%r doesn't represent any model." % msm)
         else:
             try:
                 mods.append(get_model(*m.split('.')))
             except:
-                raise template.TemplateSyntaxError, "%r doesn't represent any model." % m
+                raise template.TemplateSyntaxError("%r doesn't represent any model." % m)
 
     return bits[-3], int(bits[1]), bits[-1], mods, finder
 

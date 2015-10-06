@@ -130,7 +130,7 @@ def img(parser, token):
 
 def _parse_img(bits, legacy=True):
     if len(bits) < 2 or bits[-2] != 'as':
-        raise template.TemplateSyntaxError, "{% img FORMAT for VAR as VAR_NAME %} or {% img FORMAT with FIELD VALUE as VAR_NAME %}"
+        raise template.TemplateSyntaxError("{% img FORMAT for VAR as VAR_NAME %} or {% img FORMAT with FIELD VALUE as VAR_NAME %}")
 
     try:
         format = Format.objects.get_for_name(bits[1])
@@ -146,20 +146,20 @@ def _parse_img(bits, legacy=True):
     if len(bits) == 6:
         # img FORMAT for VAR_NAME
         if bits[2] != 'for':
-            raise template.TemplateSyntaxError, "{% img FORMAT for VAR as VAR_NAME %}"
+            raise template.TemplateSyntaxError("{% img FORMAT for VAR as VAR_NAME %}")
         formated_photo = bits[3]
     elif len(bits) == 7:
         # img FORMAT with FIELD VALUE
         if bits[2] != 'with':
-            raise template.TemplateSyntaxError, "{% img FORMAT with FIELD VALUE as VAR_NAME %}"
+            raise template.TemplateSyntaxError("{% img FORMAT with FIELD VALUE as VAR_NAME %}")
         try:
             photo = get_cached_object(Photo, **{str(bits[3]) : bits[4]})
         except photo.DoesNotExist:
-            raise template.TemplateSyntaxError, "Photo with %r of %r does not exist" % (bits[3], bits[4])
+            raise template.TemplateSyntaxError("Photo with %r of %r does not exist" % (bits[3], bits[4]))
 
         formated_photo = FormatedPhoto.objects.get_photo_in_format(photo, format)
     else:
-        raise template.TemplateSyntaxError, "{% img FORMAT for VAR as VAR_NAME %} or {% img FORMAT with FIELD VALUE as VAR_NAME %}"
+        raise template.TemplateSyntaxError("{% img FORMAT for VAR as VAR_NAME %} or {% img FORMAT with FIELD VALUE as VAR_NAME %}")
 
     return ImgTag(formated_photo, format, bits[-1])
 

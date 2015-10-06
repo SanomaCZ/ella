@@ -96,7 +96,7 @@ LISTING_PARAMS = set(['of', 'for', 'from', 'as', 'using', 'with', 'without', ])
 def listing_parse(input):
     params = {}
     if len(input) < 4:
-        raise template.TemplateSyntaxError, "%r tag argument should have at least 4 arguments" % input[0]
+        raise template.TemplateSyntaxError("%r tag argument should have at least 4 arguments" % input[0])
     o = 1
     # limit
     params['count'] = template.Variable(input[o])
@@ -121,7 +121,7 @@ def listing_parse(input):
             for mod in ''.join(mods).split(','):
                 m = get_model(*mod.split('.'))
                 if m is None:
-                    raise template.TemplateSyntaxError, "%r tag cannot list objects of unknown model %r" % (input[0], mod)
+                    raise template.TemplateSyntaxError("%r tag cannot list objects of unknown model %r" % (input[0], mod))
                 l.append(ContentType.objects.get_for_model(m))
             params['content_types'] = l
 
@@ -138,7 +138,7 @@ def listing_parse(input):
             elif input[o] == 'descendents':
                 params['children'] = ListingHandler.ALL
             else:
-                raise template.TemplateSyntaxError, "%r tag's argument 'with' required specification (with children|with descendents)" % input[0]
+                raise template.TemplateSyntaxError("%r tag's argument 'with' required specification (with children|with descendents)" % input[0])
             o = o + 1
 
         # without (exclude publishable
@@ -159,10 +159,10 @@ def listing_parse(input):
         else:
             raise template.TemplateSyntaxError('Unknown param for %s: %r' % (input[0], input[o]))
     else:
-        raise template.TemplateSyntaxError, "%r tag requires 'as' argument" % input[0]
+        raise template.TemplateSyntaxError("%r tag requires 'as' argument" % input[0])
 
     if o < len(input):
-        raise template.TemplateSyntaxError, "%r tag requires 'as' as last argument" % input[0]
+        raise template.TemplateSyntaxError("%r tag requires 'as' as last argument" % input[0])
 
     return var_name, params
 
@@ -302,7 +302,7 @@ def do_box(parser, token):
 def _parse_box(nodelist, bits):
     # {% box BOXTYPE for var_name %}                {% box BOXTYPE for content.type with PK_FIELD PK_VALUE %}
     if (len(bits) != 4 or bits[2] != 'for') and (len(bits) != 7 or bits[2] != 'for' or bits[4] != 'with'):
-        raise template.TemplateSyntaxError, "{% box BOXTYPE for content.type with FIELD VALUE %} or {% box BOXTYPE for var_name %}"
+        raise template.TemplateSyntaxError("{% box BOXTYPE for content.type with FIELD VALUE %} or {% box BOXTYPE for var_name %}")
 
     if len(bits) == 4:
         # var_name

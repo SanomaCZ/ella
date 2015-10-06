@@ -29,7 +29,7 @@ def generate_fk_class(name, retrieve_func, limit_to_model=None):
     class CachedReverseSingleRelatedObjectDescriptor(ReverseSingleRelatedObjectDescriptor):
         def __get__(self, instance, instance_type=None):
             if instance is None:
-                raise AttributeError, "%s must be accessed via instance" % self.field.name
+                raise AttributeError("%s must be accessed via instance" % self.field.name)
             cache_name = self.field.get_cache_name()
             try:
                 return getattr(instance, cache_name)
@@ -65,7 +65,7 @@ class CachedGenericForeignKey(GenericForeignKey):
         # Fix for django 1.0 Admin Validation
         if instance is None:
             # TODO: hotfixed
-            #raise AttributeError, "%s must be accessed via instance" % self.name
+            #raise AttributeError("%s must be accessed via instance" % self.name)
             return
 
         try:

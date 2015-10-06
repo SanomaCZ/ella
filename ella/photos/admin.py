@@ -27,7 +27,7 @@ class FormatedPhotoForm(forms.BaseForm):
             ((data['crop_left'] + data['crop_width']) > photo.width) or
             ((data['crop_top'] + data['crop_height']) > photo.height)
         ):
-            # raise forms.ValidationError, ugettext("The specified crop coordinates do not fit into the source photo.")
+            # raise forms.ValidationError(ugettext("The specified crop coordinates do not fit into the source photo."))
             raise ValidationError(ugettext("The specified crop coordinates do not fit into the source photo."))
         return data
 

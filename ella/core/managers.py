@@ -160,12 +160,12 @@ class ListingHandler(object):
             return self.get_listing(k)
 
         if not isinstance(k, slice) or k.step:
-            raise TypeError, '%s, %s' % (k.start, k.stop)
+            raise TypeError('%s, %s' % (k.start, k.stop))
 
         offset = k.start or 0
 
         if offset < 0 or k.stop is None  or k.stop < offset:
-            raise TypeError, '%s, %s' % (k.start, k.stop)
+            raise TypeError('%s, %s' % (k.start, k.stop))
 
         count = k.stop - offset
 
