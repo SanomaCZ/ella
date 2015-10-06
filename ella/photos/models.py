@@ -26,7 +26,7 @@ from ella.core.cache.utils import get_cached_object
 from ella.photos.conf import photos_settings
 from ella.utils.timezone import now
 
-from formatter import Formatter
+from .formatter import Formatter
 
 __all__ = ("Format", "FormatedPhoto", "Photo")
 
