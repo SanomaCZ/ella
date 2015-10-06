@@ -262,7 +262,7 @@ class RedisListingHandler(ListingHandler):
         publishables = get_cached_objects(ids, missing=SKIP)
 
         # create mock Listing objects to return
-        return map(lambda (p, score): self._get_listing(p, score), zip(publishables, data))
+        return map(lambda ps: self._get_listing(ps[0], ps[1]), zip(publishables, data))
 
     def _union(self, union_keys, pipe):
         if len(union_keys) > 1:
