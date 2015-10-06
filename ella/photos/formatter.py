@@ -76,12 +76,12 @@ class Formatter(object):
 
         if self.image_ratio < self.format_ratio:
             # image taller than format
-            diff = ih - (iw * self.fh / self.fw)
+            diff = ih - (iw * self.fh // self.fw)
             return (0, diff // 2 , iw, ih - diff // 2)
 
         elif self.image_ratio > self.format_ratio:
             # image wider than format
-            diff = iw - (ih * self.fw / self.fh)
+            diff = iw - (ih * self.fw // self.fh)
             return (diff // 2, 0, iw - diff // 2, ih)
 
         else:
@@ -171,11 +171,11 @@ class Formatter(object):
 
         elif self.image_ratio < self.format_ratio:
             # image taller than format
-            return (self.fh * iw / ih, self.fh)
+            return (self.fh * iw // ih, self.fh)
 
         else: # self.image_ratio > self.format_ratio
             # image wider than format
-            return (self.fw, self.fw * ih / iw)
+            return (self.fw, self.fw * ih // iw)
 
     def resize(self):
         """

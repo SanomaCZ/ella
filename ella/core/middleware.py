@@ -122,7 +122,7 @@ class FetchFromCacheMiddleware(object):
     def __init__(self):
         self.cache_expire_timeout = settings.CACHE_MIDDLEWARE_SECONDS
         self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
-        self.cache_refresh_timeout = getattr(settings, 'CACHE_MIDDLEWARE_REFRESH_SECONDS', self.cache_expire_timeout / 2)
+        self.cache_refresh_timeout = getattr(settings, 'CACHE_MIDDLEWARE_REFRESH_SECONDS', self.cache_expire_timeout // 2)
         self.timeout = getattr(settings, 'CACHE_MIDDLEWARE_REFRESH_TIMEOUT', 10)
         self.cache_anonymous_only = getattr(settings, 'CACHE_MIDDLEWARE_ANONYMOUS_ONLY', False)
 
