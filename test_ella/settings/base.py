@@ -57,7 +57,7 @@ LISTING_HANDLERS = {
     'default': 'ella.core.managers.ModelListingHandler',
     'redis': 'ella.core.cache.redis.TimeBasedListingHandler',
 }
-LISTINGS_REDIS = {}
+LISTINGS_REDIS = {'decode_responses': True}
 USE_REDIS_FOR_LISTINGS = True
 REDIS_LISTING_HANDLER = 'redis'
 
