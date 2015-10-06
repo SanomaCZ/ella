@@ -30,7 +30,7 @@ class CustomURLNode(Node):
         url = ''
         try:
             url = self.resolver.reverse(obj, self.view_name, *args, **kwargs)
-        except NoReverseMatch, e:
+        except NoReverseMatch as e:
             if self.asvar is None:
                 raise e
 

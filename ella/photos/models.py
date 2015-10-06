@@ -306,7 +306,7 @@ class FormatedPhotoManager(models.Manager):
                 # use get or create because there is a possible race condition here
                 # we don't want to JUST use get_or_create to go through cache 99.9% of the time
                 formated_photo, _ = self.get_or_create(photo=photo, format=format)
-            except (IOError, SystemError), e:
+            except (IOError, SystemError) as e:
                 log.warning("Cannot create formatted photo due to %s.", e)
                 return format.get_blank_img()
 

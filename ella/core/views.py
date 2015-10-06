@@ -140,7 +140,7 @@ class ObjectDetail(EllaCoreView):
     def __call__(self, request, category, slug, year=None, month=None, day=None, id=None, url_remainder=None):
         try:
             context = self.get_context(request, category, slug, year, month, day, id)
-        except self.WrongUrl, e:
+        except self.WrongUrl as e:
             message, obj = e.args
             url = obj.get_absolute_url()
             if url_remainder:

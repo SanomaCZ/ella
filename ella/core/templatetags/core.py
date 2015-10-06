@@ -182,7 +182,7 @@ class BoxNode(template.Node):
             if isinstance(self.lookup[1], template.Variable):
                 try:
                     lookup_val = self.lookup[1].resolve(context)
-                except template.VariableDoesNotExist, e:
+                except template.VariableDoesNotExist as e:
                     log.warning('BoxNode: Template variable does not exist. var_name=%s', self.lookup[1].var)
                     raise ObjectNotFoundOrInvalid()
 
@@ -191,13 +191,13 @@ class BoxNode(template.Node):
 
             try:
                 obj = get_cached_object(self.model, **{self.lookup[0] : lookup_val})
-            except (models.ObjectDoesNotExist, AssertionError), e:
+            except (models.ObjectDoesNotExist, AssertionError) as e:
                 log.warning('BoxNode: %s (%s : %s)', str(e), self.lookup[0], lookup_val)
                 raise ObjectNotFoundOrInvalid()
         else:
             try:
                 obj = self.var.resolve(context)
-            except template.VariableDoesNotExist, e:
+            except template.VariableDoesNotExist as e:
                 log.warning('BoxNode: Template variable does not exist. var_name=%s', self.var.var)
                 raise ObjectNotFoundOrInvalid()
 
