@@ -1,6 +1,5 @@
-from urllib import urlencode
-
 from django.utils import six
+from django.utils.six.moves.urllib.parse import urlencode
 from django import template
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
@@ -30,7 +29,7 @@ def _do_paginator(context, adjacent_pages, template_name):
 
     s = max(1, page_no - adjacent_pages - max(0, page_no + adjacent_pages -
         page.paginator.num_pages))
-    page_numbers = range(s, min(page.paginator.num_pages, s + 2 * adjacent_pages) + 1)
+    page_numbers = list(range(s, min(page.paginator.num_pages, s + 2 * adjacent_pages) + 1))
 
     return template_name, {
         'query_params': query_params,

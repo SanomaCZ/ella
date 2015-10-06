@@ -6,6 +6,7 @@ from hashlib import md5
 from itertools import chain
 
 from django.utils import six
+from django.utils.six.moves import range
 from django.conf import settings
 
 from ella.core.cache.utils import get_cached_objects, SKIP
@@ -262,7 +263,7 @@ class RedisListingHandler(ListingHandler):
         publishables = get_cached_objects(ids, missing=SKIP)
 
         # create mock Listing objects to return
-        return map(lambda ps: self._get_listing(ps[0], ps[1]), zip(publishables, data))
+        return list(map(lambda ps: self._get_listing(ps[0], ps[1]), zip(publishables, data)))
 
     def _union(self, union_keys, pipe):
         if len(union_keys) > 1:
@@ -439,7 +440,7 @@ class SlidingListingHandler(RedisListingHandler):
 
         days = []
         last_day = None
-        for d in xrange(cls.WINDOW_SIZE):
+        for d in range(cls.WINDOW_SIZE):
             last_day = (today - timedelta(days=d)).strftime('%Y%m%d')
             days.append(last_day)
         return days, last_day

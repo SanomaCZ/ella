@@ -25,14 +25,14 @@ class GetRelatedTestCase(TestCase):
 
 class TestDefaultRelatedFinder(GetRelatedTestCase):
     def test_returns_unique_objects_or_shorter_list_if_not_available(self):
-        expected = map(lambda x: x.pk, reversed(self.publishables))
+        expected = list(map(lambda x: x.pk, reversed(self.publishables)))
         tools.assert_equals(
                 expected,
                 [p.pk for p in Related.objects.get_related_for_object(self.publishable, len(expected)*3)]
             )
 
     def test_returns_publishables_listed_in_same_cat_if_no_related(self):
-        expected = map(lambda x: x.pk, reversed(self.publishables))
+        expected = list(map(lambda x: x.pk, reversed(self.publishables)))
         tools.assert_equals(
                 expected,
                 [p.pk for p in Related.objects.get_related_for_object(self.publishable, len(expected))]
