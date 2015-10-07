@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 
 from ella.core.urls import res
 
-LEGACY_RES = map(re.compile,(
+LEGACY_RES = [re.compile(regex) for regex in (
     r'^/%(cat)s/%(year)s/%(month)s/%(day)s/%(ct)s/%(slug)s/$' % res,
     r'^/%(year)s/%(month)s/%(day)s/%(ct)s/%(slug)s/$' % res,
     r'^/%(cat)s/%(year)s/%(month)s/%(day)s/%(ct)s/%(slug)s/%(rest)s$' % res,
@@ -14,7 +14,7 @@ LEGACY_RES = map(re.compile,(
     r'^/%(ct)s/%(id)s-%(slug)s/%(rest)s$' % res,
     r'^/%(cat)s/%(ct)s/%(id)s-%(slug)s/$' % res,
     r'^/%(ct)s/%(id)s-%(slug)s/$' % res,
-))
+)]
 
 class LegacyRedirectMiddleware(object):
     def process_response(self, request, response):
