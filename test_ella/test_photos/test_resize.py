@@ -190,25 +190,28 @@ class TestPhotoResizeWithRotate(TestCase):
 
     def test_jpeg_with_exit_rotation_info_3_is_rotated_180_degrees(self):
         o, f = self.get_image_and_formatter('rotate3.jpeg')
+        tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((20, 10), i.size)
+        tools.assert_equals((21, 11), i.size)
         tools.assert_equals(BLACK, i.getpixel((5, 5)))
         tools.assert_equals(WHITE, i.getpixel((15, 5)))
 
     def test_jpeg_with_exit_rotation_info_6_is_rotated_90_degrees_clockwise(self):
         o, f = self.get_image_and_formatter('rotate6.jpeg')
+        tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((10, 20), i.size)
+        tools.assert_equals((11, 21), i.size)
         tools.assert_equals(WHITE, i.getpixel((5, 5)))
         tools.assert_equals(BLACK, i.getpixel((5, 15)))
 
     def test_jpeg_with_exit_rotation_info_8_is_rotated_90_degrees_counter_clockwise(self):
         o, f = self.get_image_and_formatter('rotate8.jpeg')
+        tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((10, 20), i.size)
+        tools.assert_equals((11, 21), i.size)
         tools.assert_equals(BLACK, i.getpixel((5, 5)))
         tools.assert_equals(WHITE, i.getpixel((5, 15)))
 
