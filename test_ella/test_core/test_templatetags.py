@@ -44,7 +44,7 @@ class TestPaginate(UnitTestCase):
         tools.assert_equals((('inclusion_tags/paginator.html', 'inc/paginator.html'), {
             'page': page,
             'page_numbers': [1, 2, 3, 4, 5],
-            'query_params': '?using=custom_lh&other=param+with+spaces&p=',
+            'query_params': '?other=param+with+spaces&using=custom_lh&p=',
             'results_per_page': 10,
             'show_first': False,
             'show_last': True
@@ -216,12 +216,24 @@ class TestBoxTag(UnitTestCase):
         tools.assert_equals('example.com', t.render(template.Context()))
 
     def test_params_are_parsed(self):
-        template_loader.templates['box/box.html'] = '{% for k,v in box.params.items %}{{k}}:{{v}}|{% endfor %}'
-        t = template.Template('''{% box name for sites.site with pk 1 %}
-                level: 2
-                some_other_param: xxx
-            {% endbox %}''')
-        tools.assert_equals('some_other_param:xxx|level:2|', t.render(template.Context()))
+        param_name_1 = 'level'
+        param_name_2 = 'some_other_param'
+        param_val_1 = '3'
+        param_val_2 = 'xxxx'
+        template_loader.templates['box/box.html'] = '{{ box.params|length }}|{{ box.params.%s }}|{{ box.params.%s }}|' % (
+            param_name_1,
+            param_name_2,
+        )
+        t = template.Template('''{%% box name for sites.site with pk 1 %%}
+                %s: %s
+                %s: %s
+            {%% endbox %%}''' % (
+            param_name_1,
+            param_val_1,
+            param_name_2,
+            param_val_2,
+        ))
+        tools.assert_equals('2|%s|%s|' % (param_val_1, param_val_2,), t.render(template.Context()))
 
     def test_box_wirks_with_variable_instead_of_lookup(self):
         site = Site.objects.get(pk=1)
