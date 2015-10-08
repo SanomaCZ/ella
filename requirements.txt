@@ -1,5 +1,5 @@
 Django>=1.4.10
-Pillow
+Pillow<3.0
 pytz
 
 django-appdata>=0.1.4

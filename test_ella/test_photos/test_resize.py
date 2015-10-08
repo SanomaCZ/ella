@@ -193,7 +193,7 @@ class TestPhotoResizeWithRotate(TestCase):
         tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((21, 11), i.size)
+        tools.assert_equals((20, 10), i.size)
         tools.assert_equals(BLACK, i.getpixel((5, 5)))
         tools.assert_equals(WHITE, i.getpixel((15, 5)))
 
@@ -202,7 +202,7 @@ class TestPhotoResizeWithRotate(TestCase):
         tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((11, 21), i.size)
+        tools.assert_equals((10, 20), i.size)
         tools.assert_equals(WHITE, i.getpixel((5, 5)))
         tools.assert_equals(BLACK, i.getpixel((5, 15)))
 
@@ -211,7 +211,7 @@ class TestPhotoResizeWithRotate(TestCase):
         tools.assert_equals((20, 10), o.size)
         i, c = f.format()
 
-        tools.assert_equals((11, 21), i.size)
+        tools.assert_equals((10, 20), i.size)
         tools.assert_equals(BLACK, i.getpixel((5, 5)))
         tools.assert_equals(WHITE, i.getpixel((5, 15)))
 

@@ -204,5 +204,4 @@ class Formatter(object):
         if rotation not in rotations:
             return
 
-        # FIXME: without expand to 1 it does not rotate image in python3
-        self.image = self.image.rotate(rotations[rotation], expand=1)
+        self.image = self.image.rotate(rotations[rotation])
