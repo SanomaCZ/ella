@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import re
 import os
 import sys
@@ -54,7 +56,7 @@ class Command(BaseCommand):
         if level <= self.verbosity:
             if fd:
                 try:
-                    print fd.write('%s\n' % message)
+                    fd.write('%s\n' % message)
                 except IOError:
                     pass
             else:
