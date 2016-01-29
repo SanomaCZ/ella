@@ -47,7 +47,7 @@ class TestDefaultRelatedFinder(GetRelatedTestCase):
             )
 
     def test_returns_publishables_listed_in_same_cat_if_no_related_and_target_obj_is_listed_too(self):
-        expected = map(lambda x: x.pk, reversed(self.publishables))
+        expected = [p.pk for p in reversed(self.publishables)]
         youngest_publish_from = self.publishables[-1].publish_from + timedelta(days=1)
         list_publishable_in_category(self, self.publishable, publish_from=youngest_publish_from)
         tools.assert_equals(
