@@ -3,7 +3,6 @@ from hashlib import md5
 from datetime import date, datetime, timedelta
 
 from django.utils import six
-from django.core.cache import get_cache
 from ella.core.cache.utils import normalize_key
 
 from test_ella.cases import RedisTestCase as TestCase
@@ -23,10 +22,23 @@ from test_ella.test_core import create_basic_categories, create_and_place_a_publ
 
 from nose import tools
 
+try:
+    from django.core.cache import caches
+except ImportError:  # django < 1.7
+    from django.core.cache import get_cache
+
+    class Caches(object):
+
+        def __getitem__(self, key):
+            return get_cache(key)
+
+    caches = Caches()
+
+
 class CacheTestCase(TestCase):
     def setUp(self):
         self.old_cache = utils.cache
-        self.cache = get_cache('locmem')
+        self.cache = caches['locmem']
         utils.cache = self.cache
         super(CacheTestCase, self).setUp()
 
