@@ -16,6 +16,7 @@ from ella.utils import timezone
 
 from test_ella.test_core import create_basic_categories, create_and_place_a_publishable, \
         create_and_place_more_publishables, list_all_publishables_in_category_by_hour
+
 from test_ella import template_loader
 
 from ella.core.models import Category, Author
@@ -250,34 +251,21 @@ class TestObjectDetail(ViewsTestCase):
         self.publishable.save()
         response = self.client.get('/nested-category/%d-not-the-first-article/' % self.publishable.id)
 
-        tools.assert_equals(301, response.status_code)
-        tools.assert_equals(
-            'http://testserver/nested-category/%d-first-article/' % self.publishable.id,
-            response['Location']
-        )
+        self.assertRedirects(response, '/nested-category/%d-first-article/' % self.publishable.id, status_code=301)
 
     def test_static_object_detail_redirects_to_correct_url_on_wrong_category(self):
         self.publishable.static = True
         self.publishable.save()
         response = self.client.get('/nested-category/second-nested-category/%d-%s/' % (self.publishable.id, self.publishable.slug))
 
-        tools.assert_equals(301, response.status_code)
-        tools.assert_equals(
-            'http://testserver/nested-category/%d-first-article/' % self.publishable.id,
-            response['Location']
-        )
+        self.assertRedirects(response, '/nested-category/%d-first-article/' % self.publishable.id, status_code=301)
 
     def test_static_redirects_preserve_custom_url_remainder(self):
         self.publishable.static = True
         self.publishable.save()
         response = self.client.get('/nested-category/second-nested-category/%d-%s/some/custom/url/action/' % (self.publishable.id, self.publishable.slug))
 
-        tools.assert_equals(301, response.status_code)
-        tools.assert_equals(
-            'http://testserver/nested-category/%d-first-article/some/custom/url/action/' % self.publishable.id,
-            response['Location']
-        )
-
+        self.assertRedirects(response, '/nested-category/%d-first-article/some/custom/url/action/' % self.publishable.id, status_code=301, target_status_code=404)
 
     def test_static_object_detail(self):
         self.publishable.static = True
