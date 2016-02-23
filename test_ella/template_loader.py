@@ -2,17 +2,29 @@ from unittest import TestCase
 
 from django.template import TemplateDoesNotExist
 
+try:
+    from django.template.loaders.base import Loader as BaseLoader
+except ImportError:
+    from django.template.loader import BaseLoader
+
+try:
+    from django.template import Origin
+except ImportError:
+    has_origin = False
+else:
+    has_origin = True
+
 from nose import tools
 
 
 templates = {}
 
 
-class GlobalMemTemplateLoader(object):
+class GlobalMemTemplateLoader(BaseLoader):
     is_usable = True
 
     def __init__(self, *args, **kwargs):
-        pass
+        super(GlobalMemTemplateLoader, self).__init__(*args, **kwargs)
 
     def __call__(self, template_name, template_dirs=None):
         return self.load_template(template_name, template_dirs)
@@ -23,6 +35,20 @@ class GlobalMemTemplateLoader(object):
             return templates[template_name], template_name
         except KeyError as e:
             raise TemplateDoesNotExist(e)
+
+    def get_contents(self, origin):
+        try:
+            return templates[origin.name]
+        except KeyError:
+            raise TemplateDoesNotExist(origin)
+
+    def get_template_sources(self, template_name):
+        if has_origin:
+            yield Origin(
+                name=template_name,
+                template_name=template_name,
+                loader=self,
+            )
 
     def load_template_source(self, template_name, template_dirs=None):
         return self.load_template(template_name, template_dirs)
