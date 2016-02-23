@@ -1,3 +1,4 @@
+import django
 from os.path import dirname, join, normpath, pardir
 
 FILE_ROOT = normpath(join(dirname(__file__), pardir))
@@ -11,11 +12,6 @@ MEDIA_ROOT = join(FILE_ROOT, 'static')
 STATIC_URL = MEDIA_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'test_ella.template_loader.GlobalMemTemplateLoader',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -23,6 +19,11 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'test_ella.urls'
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'test_ella.template_loader.GlobalMemTemplateLoader',
+)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -36,6 +37,29 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.contrib.auth.context_processors.auth',
 )
+
+TEMPLATE_OPTIONS = {
+    'context_processors': TEMPLATE_CONTEXT_PROCESSORS,
+    'loaders': TEMPLATE_LOADERS,
+}
+
+if django.VERSION[:2] >= (1, 9):
+    TEMPLATE_OPTIONS['builtins'] = [
+        'ella.core.templatetags.core',
+        'ella.core.templatetags.related',
+        'ella.core.templatetags.custom_urls_tags',
+        'django.templatetags.i18n',
+        'ella.photos.templatetags.photos',
+    ]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'APP_DIRS': True,
+        # 'DIRS': TEMPLATE_DIRS,
+        'OPTIONS': TEMPLATE_OPTIONS
+    },
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
