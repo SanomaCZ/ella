@@ -30,6 +30,34 @@ It is composed from several modules:
 * Well tested
 * Proven in production environment
 
+Django > 1.8
+************
+
+For use with django > 1.8 add few ella templatetags dependencies to builtins TEMPLATES setting, see example below ::
+
+	TEMPLATES = [
+	    {
+	        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+	        'DIRS': [],
+	        'APP_DIRS': True,
+	        'OPTIONS': {
+	            'context_processors': [
+	                'django.template.context_processors.debug',
+	                'django.template.context_processors.request',
+	                'django.contrib.auth.context_processors.auth',
+	                'django.contrib.messages.context_processors.messages',
+	            ],
+	            'builtins': [
+	                'ella.core.templatetags.core',
+	                'ella.core.templatetags.related',
+	                'ella.core.templatetags.custom_urls_tags',
+	                'django.templatetags.i18n',
+	                'ella.photos.templatetags.photos',
+	            ],
+	        },
+	    },
+	]
+
 Django < 1.7
 ************
 
