@@ -1,6 +1,5 @@
 from django import forms
 from django.http import Http404
-from django.template.base import add_to_builtins
 from django.utils.translation import ugettext_lazy as _
 
 from app_data import app_registry, AppDataForm, AppDataContainer
@@ -71,13 +70,19 @@ connect_signals()
 # connect cache invalidation signals
 connect_invalidation_signals()
 
-# add core templatetags to builtin so that you don't have to invoke {% load core %} in every template
-add_to_builtins('ella.core.templatetags.core')
-# keep this here for backwards compatibility
-add_to_builtins('ella.core.templatetags.related')
-# and custom urls
-add_to_builtins('ella.core.templatetags.custom_urls_tags')
-# and the same for i18n
-add_to_builtins('django.templatetags.i18n')
-# and photos are always useful
-add_to_builtins('ella.photos.templatetags.photos')
+try:
+    # django < 1.9
+    from django.template.base import add_to_builtins
+except ImportError:
+    pass
+else:
+    # add core templatetags to builtin so that you don't have to invoke {% load core %} in every template
+    add_to_builtins('ella.core.templatetags.core')
+    # keep this here for backwards compatibility
+    add_to_builtins('ella.core.templatetags.related')
+    # and custom urls
+    add_to_builtins('ella.core.templatetags.custom_urls_tags')
+    # and the same for i18n
+    add_to_builtins('django.templatetags.i18n')
+    # and photos are always useful
+    add_to_builtins('ella.photos.templatetags.photos')
