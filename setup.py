@@ -5,7 +5,7 @@ install_requires = [
     'setuptools>=0.6b1',
     'Django>=1.4.10',
     'pytz',
-    'django-appdata>=0.1.4',
+    'django-appdata-mam>=0.1.6',
 ]
 
 tests_require = [
