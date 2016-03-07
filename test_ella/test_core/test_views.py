@@ -6,6 +6,7 @@ from test_ella.cases import RedisTestCase as TestCase
 
 from nose import tools, SkipTest
 
+import django
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 from django.template import TemplateDoesNotExist
@@ -261,6 +262,9 @@ class TestObjectDetail(ViewsTestCase):
         self.assertRedirects(response, '/nested-category/%d-first-article/' % self.publishable.id, status_code=301)
 
     def test_static_redirects_preserve_custom_url_remainder(self):
+        if django.VERSION[:2] < (1, 5):
+            raise SkipTest()
+
         self.publishable.static = True
         self.publishable.save()
         response = self.client.get('/nested-category/second-nested-category/%d-%s/some/custom/url/action/' % (self.publishable.id, self.publishable.slug))
