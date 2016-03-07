@@ -12,7 +12,7 @@ matrix:
       env: DJANGO="1.8.5"
 install:
    - pip install Django==$DJANGO
-   - pip install -r dev_requirements.txt --use-mirrors
+   - pip install -r dev_requirements.txt
    - pip freeze
    - python setup.py develop
 env:
