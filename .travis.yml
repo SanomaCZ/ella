@@ -13,20 +13,20 @@ matrix:
     - python: "2.6"
       env: DJANGO="1.9.2"
     - python: "3.3"
-      env: DJANGO="1.4.10"
+      env: DJANGO="1.4.11"
     - python: "3.3"
       env: DJANGO="1.9.2"
     - python: "3.4"
-      env: DJANGO="1.4.10"
+      env: DJANGO="1.4.11"
 install:
    - pip install Django==$DJANGO
    - pip install -r dev_requirements.txt
    - pip freeze
    - python setup.py develop
 env:
-  - DJANGO="1.4.10"
-  - DJANGO="1.5.1"
-  - DJANGO="1.6.2"
+  - DJANGO="1.4.11"
+  - DJANGO="1.5.5"
+  - DJANGO="1.6.10"
   - DJANGO="1.7.4"
   - DJANGO="1.8.5"
   - DJANGO="1.9.2"
