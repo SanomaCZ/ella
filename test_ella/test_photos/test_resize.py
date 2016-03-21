@@ -141,6 +141,16 @@ class TestPhotoResize(TestCase):
         tools.assert_equals((100, 100), i.size)
         tools.assert_equals(BLACK, i.getpixel((99,99)))
 
+    def test_important_box_is_used_with_None_params(self):
+        i = Image.new('RGB', (200, 100), RED)
+        f = Formatter(i, self.format, important_box=(0, 0, None, None))
+        i.putpixel((99, 99), BLACK)
+
+        i, crop_box = f.format()
+        tools.assert_equals((0,0,100,100), crop_box)
+        tools.assert_equals((100, 100), i.size)
+        tools.assert_equals(BLACK, i.getpixel((99,99)))
+
     def test_important_box_is_used_for_other_positive_x_motion_as_well(self):
         i = Image.new('RGB', (200, 100), RED)
         f = Formatter(i, self.format, important_box=(100,0,200,100))

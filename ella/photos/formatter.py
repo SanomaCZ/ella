@@ -9,7 +9,7 @@ class Formatter(object):
         self.image = image
         self.fmt = format
         self.crop_box = crop_box
-        self.important_box = important_box
+        self.important_box = tuple(i or 0 for i in important_box) if important_box else None
 
         # precompute and store a bunch of numbers
         f = format
