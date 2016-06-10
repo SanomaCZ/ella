@@ -294,7 +294,7 @@ class Related(models.Model):
     like this happens, a ``Related`` instance connecting the objects should
     be created.
     """
-    publishable = models.ForeignKey(Publishable, verbose_name=_('Publishable'))
+    publishable = CachedForeignKey(Publishable, verbose_name=_('Publishable'))
 
     related_ct = ContentTypeForeignKey(verbose_name=_('Content type'))
     related_id = models.IntegerField(_('Object ID'))
