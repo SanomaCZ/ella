@@ -22,7 +22,7 @@ from django.template.defaultfilters import slugify
 from app_data import AppDataField
 
 from ella.core.models.main import Author, Source
-from ella.core.cache.utils import get_cached_object
+from ella.core.cache import CachedForeignKey, get_cached_object
 from ella.photos.conf import photos_settings
 from ella.utils.timezone import now
 
@@ -83,7 +83,7 @@ class Photo(models.Model):
 
     # Authors and Sources
     authors = models.ManyToManyField(Author, verbose_name=_('Authors'), related_name='photo_set')
-    source = models.ForeignKey(Source, blank=True, null=True, verbose_name=_('Source'), on_delete=models.SET_NULL)
+    source = CachedForeignKey(Source, blank=True, null=True, verbose_name=_('Source'), on_delete=models.SET_NULL)
 
     created = models.DateTimeField(auto_now_add=True)
 
@@ -206,7 +206,7 @@ class Format(models.Model):
     resample_quality = models.IntegerField(_('Resample quality'),
         choices=photos_settings.FORMAT_QUALITY, default=85)
     sites = models.ManyToManyField(Site, verbose_name=_('Sites'))
-    master = models.ForeignKey('self', verbose_name=_('Master'), null=True, blank=True, help_text=_((
+    master = CachedForeignKey('self', verbose_name=_('Master'), null=True, blank=True, help_text=_((
         'When generating formatted image, use the image formatted to master format instead of the original.'
         'Useful when editors crop certain formats by hand and you wish to re-use those coordinates automatically.'
     )))
@@ -328,8 +328,8 @@ class FormatedPhoto(models.Model):
     the path to the generated image file, crop used is also stored together
     with new ``width`` and ``height`` attributes.
     """
-    photo = models.ForeignKey(Photo)
-    format = models.ForeignKey(Format)
+    photo = CachedForeignKey(Photo)
+    format = CachedForeignKey(Format)
     # save it to YYYY/MM/DD structure
     image = models.ImageField(upload_to=photos_settings.UPLOAD_TO,
         height_field='height', width_field='width', max_length=300)
