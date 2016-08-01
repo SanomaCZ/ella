@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _, ugettext
@@ -9,6 +11,7 @@ from django.contrib.redirects.models import Redirect
 from django.core.validators import validate_slug
 from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
+from django.db.utils import IntegrityError
 
 from app_data import AppDataField
 
@@ -21,6 +24,8 @@ from ella.core.managers import ListingManager, RelatedManager, \
 from ella.core.models.main import Author, Source
 from ella.core.signals import content_published, content_unpublished
 from ella.utils.timezone import now, localize
+
+log = logging.getLogger('ella.core.models.publishable')
 
 
 def PublishableBox(publishable, box_type, nodelist, model=None):
@@ -127,6 +132,9 @@ class Publishable(models.Model):
         return self.get_absolute_url(domain=True)
 
     def clean(self):
+        if not self.static and len(self.get_absolute_url()) > Redirect._meta.get_field("new_path").max_length:
+            raise ValidationError(_('Object url is too long to use in redirect table, please cut slug'))
+
         if self.static or not self.published:
             return
 
@@ -170,13 +178,19 @@ class Publishable(models.Model):
             # detect change in URL and not a static one
             if old_path != new_path and new_path and not old_self.static:
                 # and create a redirect
-                redirect = Redirect.objects.get_or_create(old_path=old_path,
-                    site=self.category.site)[0]
-                redirect.new_path = new_path
-                redirect.save(force_update=True)
-                # also update all potentially already existing redirects
-                Redirect.objects.filter(new_path=old_path).exclude(
-                    pk=redirect.pk).update(new_path=new_path)
+                try:
+                    redirect = Redirect.objects.get_or_create(old_path=old_path,
+                        site=self.category.site)[0]
+                    redirect.new_path = new_path
+                    redirect.save(force_update=True)
+                    # also update all potentially already existing redirects
+                    Redirect.objects.filter(new_path=old_path).exclude(
+                        pk=redirect.pk).update(new_path=new_path)
+                except IntegrityError:
+                    log.error(
+                        "Can not create redirect from %s to %s" % (old_path, new_path),
+                        exc_info=True
+                    )
 
             # detect change in publication status
             if old_self.is_published() != self.is_published():

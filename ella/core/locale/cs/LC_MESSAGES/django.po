@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 15:53+0100\n"
+"POT-Creation-Date: 2016-07-28 14:13+0200\n"
 "PO-Revision-Date: 2010-02-08 16:08+0100\n"
 "Last-Translator: Vitek pliska <whit@jizak.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,234 @@ msgstr ""
 msgid "Core"
 msgstr "Základní"
 
-#: conf.py:43
+#: conf.py:44
 msgid "default (category.html)"
 msgstr ""
 
-#: newman_admin.py:24
+#: models/main.py:37
+msgid "User"
+msgstr "Uživatel"
+
+#: models/main.py:38 models/main.py:74
+msgid "Name"
+msgstr "Jméno"
+
+#: models/main.py:39 models/main.py:112 models/publishable.py:51
+msgid "Slug"
+msgstr ""
+
+#: models/main.py:40 models/main.py:76 models/main.py:105
+#: models/publishable.py:63
+msgid "Description"
+msgstr "Popisek"
+
+#: models/main.py:41
+msgid "Text"
+msgstr "Text"
+
+#: models/main.py:42
+msgid "Email"
+msgstr ""
+
+#: models/main.py:44 models/publishable.py:60 newman_admin.py:211
+msgid "Photo"
+msgstr "Foto"
+
+#: models/main.py:48
+msgid "Author"
+msgstr "Autor"
+
+#: models/main.py:49 models/publishable.py:54
+msgid "Authors"
+msgstr "Autoři"
+
+#: models/main.py:75
+msgid "URL"
+msgstr "URL"
+
+#: models/main.py:80 models/publishable.py:56
+msgid "Source"
+msgstr "Zdroj"
+
+#: models/main.py:81
+msgid "Sources"
+msgstr "Zdroje"
+
+#: models/main.py:86
+msgid ""
+"Please enter a valid slug composed of lowecase letter, numbers and hyphens. "
+"First character must be a letter."
+msgstr ""
+
+#: models/main.py:104 models/publishable.py:50
+msgid "Title"
+msgstr "Titulek"
+
+#: models/main.py:106
+msgid "Description which can be used in link titles, syndication etc."
+msgstr ""
+
+#: models/main.py:107
+#, fuzzy
+msgid "Content"
+msgstr "Typ objektu"
+
+#: models/main.py:108
+msgid "Optional content to use when rendering this category."
+msgstr ""
+
+#: models/main.py:109
+#, fuzzy
+msgid "Template"
+msgstr "Související"
+
+#: models/main.py:110
+msgid "Template to use to render detail page of this category."
+msgstr ""
+
+#: models/main.py:114
+#, fuzzy
+msgid "Parent category"
+msgstr "Rodičovská kategorie"
+
+#: models/main.py:115
+msgid "Path from root category"
+msgstr "Cesta ke kořenové kategorii"
+
+#: models/main.py:120
+msgid "Custom meta data"
+msgstr ""
+
+#: models/main.py:121
+msgid ""
+"If you need to define custom data for category objects, you can use this "
+"field to do so."
+msgstr ""
+
+#: models/main.py:129 models/publishable.py:47 models/publishable.py:253
+msgid "Category"
+msgstr "Kategorie"
+
+#: models/main.py:130
+msgid "Categories"
+msgstr "Kategorie"
+
+#: models/main.py:228
+msgid "Dependency"
+msgstr "Závislost"
+
+#: models/main.py:229
+msgid "Dependencies"
+msgstr "Závislosti"
+
+#: models/main.py:232
+#, python-format
+msgid "%(obj)s depends on %(dep)s"
+msgstr ""
+
+#: models/publishable.py:66
+#, fuzzy
+msgid "Published"
+msgstr "Publikovatelný objekt"
+
+#: models/publishable.py:67 newman_admin.py:112 newman_admin.py:201
+msgid "Publish from"
+msgstr "Publikovat od"
+
+#: models/publishable.py:69
+msgid "End of visibility"
+msgstr "Konec zveřejnění"
+
+#: models/publishable.py:70
+msgid "static"
+msgstr "statický"
+
+#: models/publishable.py:73
+msgid "Last updated"
+msgstr ""
+
+#: models/publishable.py:85 newman_admin.py:173
+msgid "Publishable object"
+msgstr "Publikovatelný objekt"
+
+#: models/publishable.py:86
+msgid "Publishable objects"
+msgstr "Publikovatelné objekty"
+
+#: models/publishable.py:131
+msgid "Object url is too long to use in redirect table, please cut slug"
+msgstr "Url objektu je příliš dlouhá a nešla by použít pro přesměrování, prosím zkraťte slug."
+
+#: models/publishable.py:155
+#, python-format
+msgid "Another %s already published at this URL."
+msgstr ""
+
+#: models/publishable.py:252 models/publishable.py:300
+msgid "Publishable"
+msgstr "Publikovatelný objekt"
+
+#: models/publishable.py:255
+msgid "Start of listing"
+msgstr "Začátek umístění"
+
+#: models/publishable.py:256
+msgid "End of listing"
+msgstr "Konec umístění"
+
+#: models/publishable.py:258
+msgid "Commercial"
+msgstr "Komerční"
+
+#: models/publishable.py:259
+msgid "Check this if the listing is of a commercial content."
+msgstr "Zaškrtni pokud se jedná o komerční umístění."
+
+#: models/publishable.py:265
+msgid "Listing"
+msgstr "Umístění"
+
+#: models/publishable.py:266
+msgid "Listings"
+msgstr "Umístění"
+
+#: models/publishable.py:270
+#, python-format
+msgid "%(pub)s listed in %(cat)s"
+msgstr ""
+
+#: models/publishable.py:272
+#, fuzzy
+msgid "Broken listing"
+msgstr "Začátek umístění"
+
+#: models/publishable.py:279
+msgid "A publishable cannot be listed before it's published."
+msgstr ""
+
+#: models/publishable.py:283
+#, fuzzy
+msgid "A publishable cannot be listed longer than it's published."
+msgstr "Publikovat do musí být později než publikovat od."
+
+#: models/publishable.py:302
+msgid "Content type"
+msgstr "Typ objektu"
+
+#: models/publishable.py:303
+msgid "Object ID"
+msgstr "ID objektu"
+
+#: models/publishable.py:310 models/publishable.py:311
+msgid "Related"
+msgstr "Související"
+
+#: models/publishable.py:314
+#, python-format
+msgid "%(pub)s relates to %(rel)s"
+msgstr ""
+
+#: newman_admin.py:26
 msgid "Publish to must be later than publish from."
 msgstr "Publikovat do musí být později než publikovat od."
 
@@ -39,14 +262,6 @@ msgstr "Ne"
 #: newman_admin.py:74
 msgid "Is published?"
 msgstr "Publikováno?"
-
-#: newman_admin.py:112 newman_admin.py:201 models/publishable.py:64
-msgid "Publish from"
-msgstr "Publikovat od"
-
-#: newman_admin.py:173 models/publishable.py:82
-msgid "Publishable object"
-msgstr "Publikovatelný objekt"
 
 #: newman_admin.py:177
 msgid "site"
@@ -64,10 +279,6 @@ msgstr "Bez publikace"
 msgid "No main photo!"
 msgstr "Není výchozí foto!"
 
-#: newman_admin.py:211 models/main.py:36 models/publishable.py:57
-msgid "Photo"
-msgstr "Foto"
-
 #: register.py:26
 msgid "Paginate by"
 msgstr ""
@@ -77,248 +288,49 @@ msgid "How many records to show on one listing page."
 msgstr ""
 
 #: register.py:29
+msgid "First page count"
+msgstr ""
+
+#: register.py:31
+msgid "How many records to show on the first page only."
+msgstr ""
+
+#: register.py:32
 #, fuzzy
 msgid "Propagate listings"
 msgstr "Duplicitní listingy"
 
-#: register.py:30
+#: register.py:33
 msgid "Should propagate listings from child categories?"
 msgstr ""
 
-#: register.py:48
+#: register.py:54
 #, python-format
 msgid "Invalid page number %r"
 msgstr ""
 
-#: urls.py:35
+#: urls.py:42
 msgid "author"
 msgstr "autor"
 
-#: views.py:322
+#: views.py:345
 #, python-format
 msgid "Category with tree path %(path)r does not exist on site %(site)s"
 msgstr ""
 
-#: views.py:355
+#: views.py:378
 #, python-format
 msgid "Invalid day value %r"
 msgstr ""
 
-#: views.py:361
+#: views.py:384
 #, python-format
 msgid "Invalid month value %r"
 msgstr ""
 
-#: views.py:367
+#: views.py:390
 #, python-format
 msgid "Invalid year value %r"
-msgstr ""
-
-#: models/main.py:29
-msgid "User"
-msgstr "Uživatel"
-
-#: models/main.py:30 models/main.py:65
-msgid "Name"
-msgstr "Jméno"
-
-#: models/main.py:31 models/main.py:102 models/publishable.py:48
-msgid "Slug"
-msgstr ""
-
-#: models/main.py:32 models/main.py:67 models/main.py:95
-#: models/publishable.py:60
-msgid "Description"
-msgstr "Popisek"
-
-#: models/main.py:33
-msgid "Text"
-msgstr "Text"
-
-#: models/main.py:34
-msgid "Email"
-msgstr ""
-
-#: models/main.py:40
-msgid "Author"
-msgstr "Autor"
-
-#: models/main.py:41 models/publishable.py:51
-msgid "Authors"
-msgstr "Autoři"
-
-#: models/main.py:66
-msgid "URL"
-msgstr "URL"
-
-#: models/main.py:71 models/publishable.py:53
-msgid "Source"
-msgstr "Zdroj"
-
-#: models/main.py:72
-msgid "Sources"
-msgstr "Zdroje"
-
-#: models/main.py:77
-msgid ""
-"Please enter a valid slug composed of lowecase letter, numbers and hyphens. "
-"First character must be a letter."
-msgstr ""
-
-#: models/main.py:94 models/publishable.py:47
-msgid "Title"
-msgstr "Titulek"
-
-#: models/main.py:96
-msgid "Description which can be used in link titles, syndication etc."
-msgstr ""
-
-#: models/main.py:97
-#, fuzzy
-msgid "Content"
-msgstr "Typ objektu"
-
-#: models/main.py:98
-msgid "Optional content to use when rendering this category."
-msgstr ""
-
-#: models/main.py:99
-#, fuzzy
-msgid "Template"
-msgstr "Související"
-
-#: models/main.py:100
-msgid "Template to use to render detail page of this category."
-msgstr ""
-
-#: models/main.py:104
-#, fuzzy
-msgid "Parent category"
-msgstr "Rodičovská kategorie"
-
-#: models/main.py:105
-msgid "Path from root category"
-msgstr "Cesta ke kořenové kategorii"
-
-#: models/main.py:110
-msgid "Custom meta data"
-msgstr ""
-
-#: models/main.py:111
-msgid ""
-"If you need to define custom data for category objects, you can use this "
-"field to do so."
-msgstr ""
-
-#: models/main.py:119 models/publishable.py:44 models/publishable.py:233
-msgid "Category"
-msgstr "Kategorie"
-
-#: models/main.py:120
-msgid "Categories"
-msgstr "Kategorie"
-
-#: models/main.py:217
-msgid "Dependency"
-msgstr "Závislost"
-
-#: models/main.py:218
-msgid "Dependencies"
-msgstr "Závislosti"
-
-#: models/main.py:221
-#, python-format
-msgid "%(obj)s depends on %(dep)s"
-msgstr ""
-
-#: models/publishable.py:63
-#, fuzzy
-msgid "Published"
-msgstr "Publikovatelný objekt"
-
-#: models/publishable.py:66
-msgid "End of visibility"
-msgstr "Konec zveřejnění"
-
-#: models/publishable.py:67
-msgid "static"
-msgstr "statický"
-
-#: models/publishable.py:70
-msgid "Last updated"
-msgstr ""
-
-#: models/publishable.py:83
-msgid "Publishable objects"
-msgstr "Publikovatelné objekty"
-
-#: models/publishable.py:145
-#, python-format
-msgid "Another %s already published at this URL."
-msgstr ""
-
-#: models/publishable.py:232 models/publishable.py:279
-msgid "Publishable"
-msgstr "Publikovatelný objekt"
-
-#: models/publishable.py:235
-msgid "Start of listing"
-msgstr "Začátek umístění"
-
-#: models/publishable.py:236
-msgid "End of listing"
-msgstr "Konec umístění"
-
-#: models/publishable.py:238
-msgid "Commercial"
-msgstr "Komerční"
-
-#: models/publishable.py:239
-msgid "Check this if the listing is of a commercial content."
-msgstr "Zaškrtni pokud se jedná o komerční umístění."
-
-#: models/publishable.py:245
-msgid "Listing"
-msgstr "Umístění"
-
-#: models/publishable.py:246
-msgid "Listings"
-msgstr "Umístění"
-
-#: models/publishable.py:250
-#, python-format
-msgid "%(pub)s listed in %(cat)s"
-msgstr ""
-
-#: models/publishable.py:252
-#, fuzzy
-msgid "Broken listing"
-msgstr "Začátek umístění"
-
-#: models/publishable.py:259
-msgid "A publishable cannot be listed before it's published."
-msgstr ""
-
-#: models/publishable.py:263
-#, fuzzy
-msgid "A publishable cannot be listed longer than it's published."
-msgstr "Publikovat do musí být později než publikovat od."
-
-#: models/publishable.py:281
-msgid "Content type"
-msgstr "Typ objektu"
-
-#: models/publishable.py:282
-msgid "Object ID"
-msgstr "ID objektu"
-
-#: models/publishable.py:289 models/publishable.py:290
-msgid "Related"
-msgstr "Související"
-
-#: models/publishable.py:293
-#, python-format
-msgid "%(pub)s relates to %(rel)s"
 msgstr ""
 
 #~ msgid "Top %(count)d %(ctype)s objects in category %(cat)s."
