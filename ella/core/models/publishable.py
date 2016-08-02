@@ -16,8 +16,13 @@ from django.db.utils import IntegrityError
 from app_data import AppDataField
 
 from ella.core.box import Box
-from ella.core.cache import CachedGenericForeignKey, \
-    CachedForeignKey, ContentTypeForeignKey, CategoryForeignKey
+from ella.core.cache import (
+    CachedGenericForeignKey,
+    CachedForeignKey,
+    ContentTypeForeignKey,
+    CategoryForeignKey,
+    get_cached_object,
+)
 from ella.core.conf import core_settings
 from ella.core.managers import ListingManager, RelatedManager, \
     PublishableManager
@@ -131,9 +136,27 @@ class Publishable(models.Model):
     def get_domain_url(self):
         return self.get_absolute_url(domain=True)
 
-    def clean(self):
-        if not self.static and len(self.get_absolute_url()) > Redirect._meta.get_field("new_path").max_length:
+    def validate_get_absolute_url_for_redirection(self):
+        """
+        Validate get absolute url for usage in Redirect table to prevent
+        errors in save method
+        """
+        url_changed = True
+        if self.pk:
+            try:
+                old_self = get_cached_object(self.__class__, pk=self.pk)
+            except self.__class__.DoesNotExist:
+                pass
+            else:
+                old_path = old_self.get_absolute_url()
+                new_path = self.get_absolute_url()
+                url_changed = not bool(old_path == new_path)
+
+        if url_changed and len(self.get_absolute_url()) > Redirect._meta.get_field("new_path").max_length:
             raise ValidationError(_('Object url is too long to use in redirect table, please cut slug'))
+
+    def clean(self):
+        self.validate_get_absolute_url_for_redirection()
 
         if self.static or not self.published:
             return
