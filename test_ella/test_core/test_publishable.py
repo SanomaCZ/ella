@@ -138,11 +138,44 @@ class TestUrl(PublishableTestCase):
         self.publishable.pk = None
         tools.assert_raises(ValidationError, self.publishable.full_clean)
 
-    def test_url_is_too_long_for_redirect(self):
+    def test_url_is_too_long_for_redirect_for_static_with_pk(self):
         long_slug = 'old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slugold-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug'
+        self.publishable.static = True
         self.publishable.slug = long_slug
 
+        tools.assert_true(self.publishable.pk)
         tools.assert_raises(ValidationError, self.publishable.full_clean)
+
+    def test_url_is_too_long_for_redirect_not_tested_for_static_without_pk(self):
+        long_slug = 'old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slugold-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug'
+        self.publishable.slug = long_slug
+        self.publishable.static = True
+        self.publishable.pk = None
+
+        self.publishable.full_clean()
+
+    def test_url_is_too_long_for_redirect_for_non_static_with_pk(self):
+        long_slug = 'old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slugold-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug'
+        self.publishable.slug = long_slug
+        self.publishable.static = False
+
+        tools.assert_true(self.publishable.pk)
+        tools.assert_raises(ValidationError, self.publishable.full_clean)
+
+    def test_url_is_too_long_for_redirect_for_non_static_without_pk(self):
+        long_slug = 'old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slugold-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug-old-article-new-slug'
+        self.publishable.slug = long_slug
+        self.publishable.static = False
+        self.publishable.pk = None
+
+        tools.assert_raises(ValidationError, self.publishable.full_clean)
+
+    def test_url_is_too_long_for_redirect_not_tested_if_slug_missing(self):
+        self.publishable.slug = None
+        self.publishable.static = True
+
+        tools.assert_true(self.publishable.pk)
+        self.publishable.validate_get_absolute_url_for_redirection()
 
     def test_unique_url_validation_for_non_static_objects_with_different_content_types(self):
         publishable = self.publishable
@@ -162,7 +195,7 @@ class TestUrl(PublishableTestCase):
         )
         tools.assert_raises(ValidationError, xarticle.full_clean)
 
-    def test_url_is_tested_for_published_objects_only(self):
+    def test_unique_url_is_tested_for_published_objects_only(self):
         self.publishable.pk = None
         self.publishable.published = False
         self.publishable.full_clean()

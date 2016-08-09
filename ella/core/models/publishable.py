@@ -141,6 +141,12 @@ class Publishable(models.Model):
         Validate get absolute url for usage in Redirect table to prevent
         errors in save method
         """
+        if self.static and not self.pk:
+            return
+
+        if not self.category_id or not self.publish_from or not self.slug:
+            return
+
         url_changed = True
         if self.pk:
             try:
