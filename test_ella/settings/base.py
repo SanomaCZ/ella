@@ -34,7 +34,7 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.media',
+    'django.template.context_processors.media',
     'django.contrib.auth.context_processors.auth',
 )
 
