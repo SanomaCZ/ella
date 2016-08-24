@@ -18,16 +18,16 @@ We would like our URL to have following form::
 To do this, we will append a custom view function for the ``Video`` model::
 
     # in yourapp/video/urls.py
-    from django.conf.urls.defaults import url, patterns
+    from django.conf.urls import url
     
     from ella.core.custom_urls import resolver
 
     from yourapp.models import Video    
     from yourapp.video.views import show_discussion
     
-    urlpatterns = patterns('',
+    urlpatterns = [
         url(r'^discussion/$', show_discussion, name='video-show-discussions'),
-    )
+    ]
     
     resolver.register(urlpatterns, model=Video)
 

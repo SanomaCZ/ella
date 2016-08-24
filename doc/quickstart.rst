@@ -129,36 +129,29 @@ is turned on since it would be rather inefficent in production (for more on
 this topic, see `Managing static files`_ section in Django docs). In similar
 fashion, serve also media files discussed in previous paragraph::
     
-    from django.conf.urls.defaults import *
+    from django.conf.urls import url, include
     from django.conf import settings
     from django.contrib import admin 
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    from django.conf.urls.static import static
 
-    # register apps for Django admin and let the apps do any initialization they need
+    # Let the apps do any initialization they need
     from ella.utils.installedapps import call_modules
-    call_modules(('admin', 'register', ))
-    
-    urlpatterns = patterns('',)
+    call_modules(('register', ))
     
     # actual URL mappings
-    urlpatterns += patterns('',
-        # serve media files
-        (r'^%s/(?P<path>.*)$' % settings.MEDIA_URL, 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT, 'show_indexes': True }),
-        
+    urlpatterns = [
         # run Django admin
-        (r'^admin/', include(admin.site.urls)),
+        url(r'^admin/', include(admin.site.urls)),
         
         # enable Ella
-        (r'^', include('ella.core.urls')),
-    ) + staticfiles_urlpatterns()
+        url(r'^', include('ella.core.urls')),
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 .. note::
-    Instead of calling ``admin.autodiscover`` we are using Ella's
-    ``call_modules`` which is a more generic version of the same thing. and
-    allows us to load additional modules - namely ``register.py`` where, by
-    convention all Ella apps put the codethey need for their initialization
-    (connecting signal handlers, registering :ref:`custom
+    We are using Ella's ``call_modules`` which allows us to load additional modules
+    - namely ``register.py`` where, by convention all Ella apps put the codethey need
+    for their initialization (connecting signal handlers, registering :ref:`custom
     urls<plugins-overriding-publishable-urls>` etc.)
     
 .. _Managing static files: https://docs.djangoproject.com/en/dev/howto/static-files/
