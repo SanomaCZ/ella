@@ -35,12 +35,14 @@ class CategoryAdmin(AppDataModelAdmin):
     search_fields = ('title', 'slug',)
     #ordering = ('site', 'tree_path',)
     prepopulated_fields = {'slug': ('title',)}
-    declared_fieldsets = ((None, {'fields': ('title', 'slug',
-                                             ('description', 'content'),
-                                             'template', ('site', 'tree_parent'),
-                                             'ella.paginate_by',
-                                             'ella.first_page_count',
-                                             'ella.propagate_listings')}),)
+    fieldsets = (
+        (None, {'fields': ('title', 'slug')}),
+        (None, {'fields': (('description', 'content'),)}),
+        (None, {'fields': ('template', ('site', 'tree_parent'))}),
+        (None, {'fields': ('ella.paginate_by',)}),
+        (None, {'fields': ('ella.first_page_count',)}),
+        (None, {'fields': ('ella.propagate_listings',)}),
+    )
 
 
 class AuthorAdmin(admin.ModelAdmin):
