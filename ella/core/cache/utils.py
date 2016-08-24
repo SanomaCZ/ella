@@ -20,7 +20,10 @@ CACHE_TIMEOUT = getattr(settings, 'CACHE_TIMEOUT', 10 * 60)
 
 
 def invalidate_cache(sender, instance, **kwargs):
-    invalidate_cache_for_object(instance)
+    try:
+        invalidate_cache_for_object(instance)
+    except Exception:
+        log.warning("Can not invalidate cache for object", exc_info=True)
 
 
 def connect_invalidation_signals():
