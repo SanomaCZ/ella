@@ -5,12 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import lazy
 
 try:
-    from django.conf.urls import patterns, include, url
+    from django.conf.urls import include, url
 except ImportError:
     from django.conf.urls.defaults import patterns, include, url
 
 from ella.core.views import object_detail, list_content_type, category_detail, \
-                            home, AuthorView
+                            home, AuthorView, export
 
 
 try:
@@ -42,7 +42,7 @@ res = {
     'author': lazy_slugify(_('author'))
 }
 
-urlpatterns = patterns('',
+urlpatterns = [
     # home page
     url(r'^$', home, name="root_homepage"),
 
@@ -50,9 +50,9 @@ urlpatterns = patterns('',
     url(lazy_regex(r'^%(author)s/%(slug)s/$', res), AuthorView.as_view(), name='author_detail'),
 
     # export banners
-    url(r'^export/xml/(?P<name>[a-z0-9-]+)/$', 'ella.core.views.export', { 'count' : 3, 'content_type' : 'text/xml' }, name="named_export_xml"),
-    url(r'^export/$', 'ella.core.views.export', { 'count' : 3 }, name="export"),
-    url(r'^export/(?P<name>[a-z0-9-]+)/$', 'ella.core.views.export', { 'count' : 3 }, name="named_export"),
+    url(r'^export/xml/(?P<name>[a-z0-9-]+)/$', export, { 'count' : 3, 'content_type' : 'text/xml' }, name="named_export_xml"),
+    url(r'^export/$', export, { 'count' : 3 }, name="export"),
+    url(r'^export/(?P<name>[a-z0-9-]+)/$', export, { 'count' : 3 }, name="named_export"),
 
     # list of objects regadless of category and content type
     url(r'^%(year)s/%(month)s/%(day)s/$' % res, list_content_type, name="list_day"),
@@ -89,4 +89,4 @@ urlpatterns = patterns('',
     # category homepage
     url(r'^%(cat)s/$' % res, category_detail, name="category_detail"),
 
-)
+]
