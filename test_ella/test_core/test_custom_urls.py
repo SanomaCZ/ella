@@ -11,10 +11,7 @@ from django.core.urlresolvers import NoReverseMatch
 from django.template import Template, Context
 from django.utils.encoding import force_text
 
-try:
-    from django.conf.urls import patterns, url
-except ImportError:
-    from django.conf.urls.defaults import patterns, url
+from django.conf.urls import url
 
 from ella.core.custom_urls import CustomURLResolver
 from ella.core import custom_urls
@@ -44,11 +41,11 @@ def dummy_view(request, *args, **kwargs):
 
 
 class CustomObjectDetailTestCase(TestCase):
-    urlpatterns = patterns('',
+    urlpatterns = [
         url(r'^$', dummy_view, {'kwarg_from_patterns': 42}, name='prefix'),
         url(r'^new/(\d+)/$', dummy_view, name='prefix-new'),
         url(r'^add/(?P<kwarg_from_url>\d+)/$', dummy_view, name='prefix-add'),
-    )
+    ]
 
     def setUp(self):
         super(CustomObjectDetailTestCase, self).setUp()
