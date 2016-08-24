@@ -2,11 +2,7 @@ import re
 
 from django.http import Http404
 from django.core.urlresolvers import RegexURLResolver
-
-try:
-    from django.conf.urls import patterns, url, include
-except ImportError:
-    from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls import url, include
 
 
 ALL = '__ALL__'
@@ -49,9 +45,9 @@ class CustomURLResolver(object):
     def register(self, urlpatterns, prefix=None, model=None):
         key = str(model._meta) if model else ALL
         if prefix:
-            urlpatterns = patterns('',
+            urlpatterns = [
                     url('^%s/' % re.escape(prefix), include((urlpatterns, '', ''))),
-                )
+                ]
         self._patterns.setdefault(key, []).extend(urlpatterns)
 
     def _get_resolver(self, obj):
