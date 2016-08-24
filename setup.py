@@ -3,7 +3,8 @@ import ella
 
 install_requires = [
     'setuptools>=0.6b1',
-    'Django>=1.4.11',
+    'Django>=1.8',
+    'Pillow<3.0',
     'pytz',
     'django-appdata-mam>=0.1.6',
 ]
@@ -41,9 +42,8 @@ setup(
         "Operating System :: OS Independent",
         "Framework :: Django",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Operating System :: OS Independent",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
