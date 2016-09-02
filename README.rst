@@ -99,7 +99,6 @@ Build status
 
 :Master branch:
 
-  .. image:: https://secure.travis-ci.org/ella/ella.png
+  .. image:: https://travis-ci.org/MichalMaM/ella.svg?branch=master
      :alt: Travis CI - Distributed build platform for the open source community
-     :target: http://travis-ci.org/#!/ella/ella
-
+     :target: https://travis-ci.org/MichalMaM/ella
