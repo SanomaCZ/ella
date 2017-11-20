@@ -30,7 +30,7 @@ DEFAULT_BG_COLOR = 'black'
 FORMATED_PHOTO_FILENAME = None
 
 DEBUG = False
-DEBUG_PLACEHOLDER_PROVIDER_TEMPLATE = 'http://placehold.it/%(width)sx%(height)s'
+DEBUG_PLACEHOLDER_PROVIDER_TEMPLATE = 'https://placehold.it/%(width)sx%(height)s'
 
 photos_settings = Settings('ella.photos.conf', 'PHOTOS')
 
