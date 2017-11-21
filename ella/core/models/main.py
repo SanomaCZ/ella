@@ -182,7 +182,7 @@ class Category(models.Model):
             url = reverse('category_detail', kwargs={'category' : self.tree_path})
         if self.site_id != settings.SITE_ID:
             # prepend the domain if it doesn't match current Site
-            return 'https://' + self.site.domain + url
+            return settings.ABSOLUTE_URL_SCHEME + '://' + self.site.domain + url
         return url
 
     def draw_title(self):

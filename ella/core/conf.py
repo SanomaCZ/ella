@@ -4,6 +4,9 @@ from django.utils.datetime_safe import datetime
 
 gettext = lambda s: s
 
+# http or https scheme for Publishable and Category absolute URL
+ABSOLUTE_URL_SCHEME = 'http'
+
 # Caching-related
 CACHE_TIMEOUT = 10 * 60
 CACHE_TIMEOUT_LONG = 60 * 60

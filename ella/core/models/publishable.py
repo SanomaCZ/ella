@@ -130,7 +130,7 @@ class Publishable(models.Model):
                 url = reverse('home_object_detail', kwargs=kwargs)
 
         if category.site_id != settings.SITE_ID or domain:
-            return 'https://' + category.site.domain + url
+            return settings.ABSOLUTE_URL_SCHEME + '://' + category.site.domain + url
         return url
 
     def get_domain_url(self):
