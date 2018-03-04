@@ -101,7 +101,7 @@ class Publishable(models.Model):
     def __eq__(self, other):
         return isinstance(other, Publishable) and self.pk == other.pk
 
-    def get_absolute_url(self, domain=False):
+    def get_absolute_url(self, domain=False, preview=False):
         " Get object's URL. "
         category = self.category
 
@@ -128,6 +128,9 @@ class Publishable(models.Model):
                 url = reverse('object_detail', kwargs=kwargs)
             else:
                 url = reverse('home_object_detail', kwargs=kwargs)
+
+        if preview:
+            url = "%s%s" % (core_settings.PREVIEW_URL_PATH, url)
 
         if category.site_id != settings.SITE_ID or domain:
             return settings.ABSOLUTE_URL_SCHEME + '://' + category.site.domain + url

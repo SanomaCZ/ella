@@ -50,6 +50,7 @@ CATEGORY_TEMPLATES = (
 # context_processor
 MEDIA_URL = ''
 STATIC_URL = MEDIA_URL
+PREVIEW_URL_PATH = '/review'
 VERSION = 1
 SERVER_INFO = {}
 
